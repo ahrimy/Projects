@@ -11,6 +11,8 @@ public class Shop {
 	Shop() {
 		userControl = new UserManager();
 		log = -1;
+		userControl.loadItem();
+		userControl.loadUser();
 	}
 
 	public void run() {
@@ -39,6 +41,8 @@ public class Shop {
 				boolean answer = scan.nextBoolean();
 				userControl.join(answer);
 			} else if (input == 0) {
+				userControl.saveItem();
+				userControl.saveUser();
 				break;
 			}
 
