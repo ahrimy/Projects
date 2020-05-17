@@ -19,6 +19,39 @@ public class ItemManager {
 		return check;
 	}
 
+	public void loadItem(String fileData) {
+		String data = fileData;
+		if (data.length() > 0) {
+			String item[] = data.split("\n");
+			for (int i = 0; i < item.length; i++) {
+				String[] temp = item[i].split(" ");
+				String name = temp[0];
+				int price = Integer.parseInt(temp[1]);
+				int itemNum = Integer.parseInt(temp[2]);
+				int cnt = Integer.parseInt(temp[3]);
+				itemList.put(new Item(name, price, itemNum), cnt);
+			}
+		}
+	}
+
+	public String saveItem() {
+		String data = "";
+		for (Item key : itemList.keySet()) {
+			data += key.getName();
+			data += " ";
+			data += key.getPrice();
+			data += " ";
+			data += key.getItemNum();
+			data += " ";
+			data += itemList.get(key);
+			data += "\n";
+		}
+		if (data.length() > 0) {
+			data = data.substring(0, data.length() - 1);
+		}
+		return data;
+	}
+
 	public void addItem() {
 		System.out.print("Enter the item name : ");
 		String name = scan.next();
