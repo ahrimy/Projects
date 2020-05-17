@@ -9,8 +9,79 @@ public class UserManager {
 	ArrayList<User> userList = new ArrayList<>();
 	Scanner scan = new Scanner(System.in);
 	ItemManager items = new ItemManager();
+	FileManager files = new FileManager();
 	int customer = 0;
 	int manager = 0;
+
+	public void saveItem() {
+		String data = "";
+		data = items.saveItem();
+		files.save(data, "item.txt");
+
+	}
+
+	public void loadItem() {
+		String data = files.load("item.txt");
+		items.loadItem(data);
+	}
+
+	public void saveUser() {
+		String data = userList.size()+"\n";
+		for (int i = 0; i < userList.size(); i++) {
+			data += userList.get(i).getName();
+			data += " ";
+			data += userList.get(i).getUserID();
+			data += " ";
+			data += userList.get(i).getUserPW();
+			data += " ";
+			data += userList.get(i).getUserNum();
+			data += " ";
+			data += userList.get(i).isCustomer();
+			data += "\n";
+			if (userList.get(i).isCustomer()) {
+				data += userList.get(i).cart.saveCart();
+			}
+		}
+		data = data.substring(0, data.length() - 1);
+		files.save(data, "user.txt");
+	}
+
+	public void loadUser() {
+		String data = files.load("user.txt");
+		customer=0;
+		manager=0;
+		if (data.length() > 0) {
+			String[] info = data.split("\n");
+			int size = Integer.parseInt(info[0]);
+			int listReader = 1;
+			for (int i = 0; i < size; i++) {
+				String temp[] = info[listReader++].split(" ");
+				System.out.println(temp[0]);
+				String name = temp[0];
+				String userID = temp[1];
+				String userPW = temp[2];
+				int userNum = Integer.parseInt(temp[3]);
+				boolean isCustomer = Boolean.parseBoolean(temp[4]);
+				if (isCustomer) {
+					User tempCustomer = new Customer(name, userID, userPW, userNum);
+					int cartSize = Integer.parseInt(info[listReader++]);
+					for (int j = 0; j < cartSize; j++) {
+						temp = info[listReader++].split(" ");
+						String itemName = temp[0];
+						int cnt = Integer.parseInt(temp[1]);
+						Item check = items.search(itemName);
+						tempCustomer.cart.list.put(check, cnt);
+						tempCustomer.cart.price+=check.getPrice()*cnt;
+					}
+					userList.add(tempCustomer);
+					customer++;
+				} else {
+					userList.add(new Manager(name, userID, userPW, userNum));
+					manager++;
+				}
+			}
+		}
+	}
 
 	public void join(boolean answer) {
 		if (answer && (manager == 0)) {
@@ -69,6 +140,7 @@ public class UserManager {
 			}
 		}
 		System.out.println();
+		saveUser();
 	}
 
 	public int leave(int log) {
@@ -83,6 +155,7 @@ public class UserManager {
 		System.out.println();
 		System.out.println(userList.get(log).getName() + " has deleted from the shop system.");
 		System.out.println();
+		saveUser();
 		return log;
 	}
 
@@ -151,6 +224,7 @@ public class UserManager {
 				break;
 			}
 		}
+		saveUser();
 	}
 
 	public void shopping(int log) {
@@ -169,22 +243,27 @@ public class UserManager {
 				System.out.println("Item name : ");
 				String name = scan.next();
 				Item check = items.search(name);
+				int itemCnt = items.itemList.get(check);
 				if (check == null) {
 					System.out.println("This item is not on the list");
 				} else {
 					System.out.println("The number of items : ");
 					int cnt = scan.nextInt();
-					Item checkSub = null;
-					for (Item key : tempList.keySet()) {
-						if (check.getItemNum() == key.getItemNum()) {
-							checkSub = key;
+					if (cnt <= itemCnt) {
+						Item checkSub = null;
+						for (Item key : tempList.keySet()) {
+							if (check.getItemNum() == key.getItemNum()) {
+								checkSub = key;
+							}
 						}
+						if (checkSub != null) {
+							int current = tempList.get(checkSub);
+							cnt = current + cnt;
+						}
+						tempList.put(check, cnt);
+					} else {
+						System.out.println("Item stock is not enough");
 					}
-					if (checkSub != null) {
-						int current = tempList.get(checkSub);
-						cnt = current + cnt;
-					}
-					tempList.put(check, cnt);
 				}
 
 			} else if (sel == 2) {
@@ -204,8 +283,14 @@ public class UserManager {
 
 			} else if (sel == 3) {
 				for (Item key : tempList.keySet()) {
-					userList.get(log).cart.addtoCart(key, tempList.get(key));
-					items.updateItem(key, -tempList.get(key));
+					int itemCnt = items.itemList.get(key);
+					int cnt = tempList.get(key);
+					if (itemCnt >= cnt) {
+						userList.get(log).cart.addtoCart(key, tempList.get(key));
+						items.updateItem(key, -tempList.get(key));
+					} else {
+						System.out.println("Item is not enough");
+					}
 				}
 				tempList.clear();
 			} else if (sel == 0) {
@@ -217,6 +302,8 @@ public class UserManager {
 				System.out.println(key.getName() + " * " + tempList.get(key));
 			}
 			System.out.println();
+			saveUser();
+			saveItem();
 		}
 
 	}
@@ -242,6 +329,8 @@ public class UserManager {
 				break;
 			}
 		}
+		saveUser();
+		saveItem();
 	}
 
 	public void itemManaging() {
@@ -265,6 +354,7 @@ public class UserManager {
 				break;
 			}
 		}
+		saveItem();
 	}
 
 	public void customerList() {
@@ -322,6 +412,7 @@ public class UserManager {
 				break;
 			}
 		}
+		saveUser();
 	}
 
 }
