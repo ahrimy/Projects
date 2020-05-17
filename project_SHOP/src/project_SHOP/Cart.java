@@ -21,7 +21,16 @@ public class Cart {
 			System.out.println("Total price : " + price);
 		}
 	}
-
+	public String saveCart(){
+		String data = list.size()+"\n";
+		for(Item key : list.keySet()){
+			data+=key.getName();
+			data+=" ";
+			data+=list.get(key);
+			data+="\n";
+		}
+		return data;
+	}
 	public Item search(String name) {
 		Item check = null;
 		for (Item key : list.keySet()) {
