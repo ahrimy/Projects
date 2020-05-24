@@ -183,6 +183,10 @@ public class HeadBoard extends JPanel implements ActionListener {
 		}else if(e.getSource()==searchBtn){
 			
 		}
+		if(e.getSource()==menuBtn[0]){
+			Main.frame.setContentPane(new ItemPanel("ÀüÃ¼"));
+			Main.frame.revalidate();
+		}
 
 	}
 }
