@@ -26,6 +26,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 	JButton[] nameBtn;
 	JLabel[] priceLabel;
 	JLabel emptyLabel;
+	public static String pageName;
 	String ctgryName;
 	String categoryList[] = { "전체", "스킨케어", "메이크업", "바디케어", "향수/디퓨져", "미용소품", "남성", "건강/위생용품", "건강식품", "일반식품",
 			"반려동물", "잡화" };
@@ -126,7 +127,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 	}
 
 	public void setCategory() {
-		ctgryLabel = new JLabel(ctgryName);
+		ctgryLabel = new JLabel(pageName);
 		ctgryLabel.setFont(new Font("", Font.BOLD, 50));
 		ctgryLabel.setBounds(360, 50, 600, 50);
 		ctgryLabel.setBackground(Color.WHITE);

@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 public class MainPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
@@ -61,6 +62,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 		firstCategory.setSize(192, 550);
 		firstCategory.setLocation(491, 0);
 		firstCategory.setBackground(Color.WHITE);
+		firstCategory.setHorizontalAlignment(SwingConstants.CENTER);
 		// firstCategory.setBorder(lineBorder);
 		backLabel.add(firstCategory);
 
@@ -68,6 +70,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 		secondCategory.setSize(192, 550);
 		secondCategory.setLocation(683, 0);
 		secondCategory.setBackground(new Color(220, 220, 220));
+		secondCategory.setHorizontalAlignment(SwingConstants.CENTER);
 		// secondCategory.setBorder(lineBorder);
 		backLabel.add(secondCategory);
 
@@ -160,18 +163,23 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 		if (!secondCategory.isOpaque()) {
 			if (x > 299 && x < 491 && y > 210 && y < 710) {
 				firstCategory.setOpaque(true);
+				firstCategory.setText("상품준비중");
 			} else if (x < 299 || x > 683 || y < 210 || y > 710) {
 				firstCategory.setOpaque(false);
+				firstCategory.setText("");
 			}
 		}
 		if (firstCategory.isOpaque()) {
 			if (x < 683 && x > 491 && y > 210 && y < 760) {
 				secondCategory.setOpaque(true);
+				secondCategory.setText("상품준비중");
 			} else if (x < 491 || x > 875 || y < 210 || y > 760) {
 				secondCategory.setOpaque(false);
+				secondCategory.setText("");
 			}
 		} else {
 			secondCategory.setOpaque(false);
+			secondCategory.setText("");
 		}
 	}
 

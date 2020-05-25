@@ -189,6 +189,7 @@ public class HeadBoard extends JPanel implements ActionListener {
 
 		}
 		if (e.getSource() == menuBtn[0]) {
+			ItemPanel.pageName = menuBtn[0].getText();
 			Main.frame.setContentPane(new ItemPanel("ÀüÃ¼"));
 			Main.frame.revalidate();
 		}

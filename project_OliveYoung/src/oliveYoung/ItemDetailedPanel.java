@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -62,6 +63,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener{
 		cart.setText("장바구니");
 		cart.setFont(new Font("",Font.BOLD,20));
 		cart.setForeground(Color.PINK);
+		cart.addActionListener(this);
 		mainPart.add(cart);
 		
 		purchase.setBounds(1300, 600, 250, 100);
@@ -69,6 +71,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener{
 		purchase.setText("바로구매");
 		purchase.setFont(new Font("",Font.BOLD,20));
 		purchase.setForeground(Color.WHITE);
+		purchase.addActionListener(this);
 		mainPart.add(purchase);
 		
 		
@@ -163,6 +166,19 @@ public class ItemDetailedPanel extends JPanel implements ActionListener{
 			}
 			count.setText(item.getCount()+"");
 			itemInfo[6][1].setText(item.getCount()*item.getPrice()+" 원");
+		}
+		if(e.getSource()==purchase){
+			if(UserManager.usermanager.logIdx==-1){
+				JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
+			}else{
+				
+			}
+		}else if(e.getSource()==cart){
+			if(UserManager.usermanager.logIdx==-1){
+				JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
+			}else{
+				
+			}
 		}
 	}
 }
