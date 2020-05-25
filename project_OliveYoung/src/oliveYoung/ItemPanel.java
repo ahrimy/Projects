@@ -27,8 +27,8 @@ public class ItemPanel extends JPanel implements ActionListener {
 	JLabel[] priceLabel;
 	JLabel emptyLabel;
 	String ctgryName;
-	String categoryList[] = { "전체", "스킨/토너", "로션", "에센스/세럼", "앰플", "크림", "미스트/픽서", "페이스오일", "아이크림/스팟케어", "남성 올인원",
-			"기획세트", "" };
+	String categoryList[] = { "전체", "스킨케어", "메이크업", "바디케어", "향수/디퓨져", "미용소품", "남성", "건강/위생용품", "건강식품", "일반식품",
+			"반려동물", "잡화" };
 
 	public ItemPanel(String name) {
 		setLayout(null);
@@ -36,10 +36,10 @@ public class ItemPanel extends JPanel implements ActionListener {
 		list = new Item[itemCount];
 		int check = -1;
 		if (name.equals("전체")) {
-			list[0] = ItemManager.instance.itemList.get("스킨/토너").get(0);
-			list[1] = ItemManager.instance.itemList.get("로션").get(0);
-			list[2] = ItemManager.instance.itemList.get("에센스/세럼").get(0);
-			list[3] = ItemManager.instance.itemList.get("크림").get(0);
+			list[0] = ItemManager.instance.itemList.get("스킨케어").get(0);
+			list[1] = ItemManager.instance.itemList.get("스킨케어").get(2);
+			list[2] = ItemManager.instance.itemList.get("메이크업").get(0);
+			list[3] = ItemManager.instance.itemList.get("메이크업").get(2);
 			check = -2;
 
 		} else {
@@ -110,12 +110,15 @@ public class ItemPanel extends JPanel implements ActionListener {
 			}
 			nameBtn[i] = new JButton(list[i].getItemName());
 			nameBtn[i].setBounds(10, 290, 250, 50);
-			priceLabel[i] = new JLabel(list[i].getPrice() + " 원",SwingConstants.CENTER);
+			priceLabel[i] = new JLabel(list[i].getPrice() + " 원", SwingConstants.CENTER);
 			priceLabel[i].setBounds(10, 340, 250, 70);
 			nameBtn[i].setBackground(Color.white);
 			nameBtn[i].setBorder(null);
-			nameBtn[i].setFont(new Font("",Font.PLAIN,15));
-			priceLabel[i].setFont(new Font("",Font.BOLD,20));
+			nameBtn[i].setFont(new Font("", Font.PLAIN, 15));
+			priceLabel[i].setFont(new Font("", Font.BOLD, 20));
+			imageBtn[i].addActionListener(this);
+			nameBtn[i].addActionListener(this);
+
 			itemArea[i].add(imageBtn[i]);
 			itemArea[i].add(nameBtn[i]);
 			itemArea[i].add(priceLabel[i]);
@@ -135,7 +138,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 			ctgryBtn[i].setBounds(360 + (i * 200), 120, 200, 50);
 			ctgryBtn[i].setBackground(Color.WHITE);
 			ctgryBtn[i].setBorder(lineBorder);
-			if(categoryList[i].equals(ctgryName)){
+			if (categoryList[i].equals(ctgryName)) {
 				ctgryBtn[i].setBorder(new LineBorder(new Color(153, 255, 51), 1, false));
 			}
 			ctgryBtn[i].setText(categoryList[i]);
@@ -144,8 +147,8 @@ public class ItemPanel extends JPanel implements ActionListener {
 			ctgryBtn[i + 6].setBounds(360 + (i * 200), 170, 200, 50);
 			ctgryBtn[i + 6].setBackground(Color.WHITE);
 			ctgryBtn[i + 6].setBorder(lineBorder);
-			if(categoryList[i+6].equals(ctgryName)){
-				ctgryBtn[i+6].setBorder(new LineBorder(new Color(153, 255, 51), 1, false));
+			if (categoryList[i + 6].equals(ctgryName)) {
+				ctgryBtn[i + 6].setBorder(new LineBorder(new Color(153, 255, 51), 1, false));
 			}
 			ctgryBtn[i + 6].setText(categoryList[i + 6]);
 			ctgryBtn[i + 6].addActionListener(this);
@@ -163,6 +166,16 @@ public class ItemPanel extends JPanel implements ActionListener {
 				if (ctgryBtn[i].getText() != "") {
 					Main.frame.setContentPane(new ItemPanel(ctgryBtn[i].getText()));
 					Main.frame.revalidate();
+				}
+			}
+		}
+		if (imageBtn != null) {
+			for (int i = 0; i < itemCount; i++) {
+				if (e.getSource() == imageBtn[i] || e.getSource() == nameBtn[i]) {
+
+					Main.frame.setContentPane(new ItemDetailedPanel(list[i]));
+					Main.frame.revalidate();
+
 				}
 			}
 		}

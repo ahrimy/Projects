@@ -11,13 +11,14 @@ public class Main {
 	public static void main(String[] args) {
 		
 		FileManager.instance.load("item.txt");
+		FileManager.instance.loadUser("user.txt");
+		
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
 		
 		frame.setBounds(0,0,screenSize.width,screenSize.height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBackground(Color.CYAN);
 		frame.setVisible(true);
 		
 		frame.setContentPane(new MainPanel());

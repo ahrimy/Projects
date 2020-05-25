@@ -160,18 +160,23 @@ public class HeadBoard extends JPanel implements ActionListener {
 		g2d.drawLine(0, 150, 1900, 150);
 		g2d.drawLine(299, 150, 299, 206);
 		g2d.drawLine(490, 150, 490, 206);
-		for (int i = 0; i < headBtn.length-1; i++) {
-			g.drawLine((i*80)+1125, 15, (i*80)+1125, 30);
+		for (int i = 0; i < headBtn.length - 1; i++) {
+			g.drawLine((i * 80) + 1125, 15, (i * 80) + 1125, 30);
 		}
 		g2d.setStroke(new BasicStroke(2.0F));
 		g2d.drawLine(1445, 85, 1445, 105);
-		
+		if (UserManager.usermanager.logIdx == -1) {
+			headBtn[0].setText("회원가입");
+			headBtn[1].setText("로그인");
+		} else {
+			headBtn[0].setText("로그아웃");
+			headBtn[1].setText("마이페이지");
+		}
 	}
-/*
- * 	JButton[] headBtn;
-	JButton[] menuBtn;
-	JButton[] subBtn;
- */
+
+	/*
+	 * JButton[] headBtn; JButton[] menuBtn; JButton[] subBtn;
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -180,12 +185,32 @@ public class HeadBoard extends JPanel implements ActionListener {
 			Main.frame.revalidate();
 		} else if (e.getSource() == categoryBtn) {
 
-		}else if(e.getSource()==searchBtn){
-			
+		} else if (e.getSource() == searchBtn) {
+
 		}
-		if(e.getSource()==menuBtn[0]){
+		if (e.getSource() == menuBtn[0]) {
 			Main.frame.setContentPane(new ItemPanel("전체"));
 			Main.frame.revalidate();
+		}
+
+		if (headBtn[0] == e.getSource()) {
+			if (headBtn[0].getText().equals("로그아웃")) {
+				UserManager.usermanager.logIdx = -1;
+				Main.frame.setContentPane(new MainPanel());
+				Main.frame.revalidate();
+			} else {
+				Main.frame.setContentPane(new JoinPanel());
+				Main.frame.revalidate();
+			}
+		} else if (headBtn[1] == e.getSource()) {
+			if (headBtn[1].getText().equals("마이페이지")) {
+				Main.frame.setContentPane(new MypagePanel());
+				Main.frame.revalidate();
+			
+			} else {
+				Main.frame.setContentPane(new LoginPanel());
+				Main.frame.revalidate();
+			}
 		}
 
 	}

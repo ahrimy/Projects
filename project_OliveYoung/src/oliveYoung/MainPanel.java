@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 public class MainPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+	/*상단화면*/
 	HeadBoard head_board = null;
 
 	JLabel selectLabel;
@@ -33,7 +34,8 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 		setLayout(null);
 		addMouseListener(this); // 마우스 와 패널 연결
 		addMouseMotionListener(this); // 마우스 모션 과 패널 연결
-
+		
+		/*상단화면*/
 		head_board = new HeadBoard();
 		head_board.setSize(1900, 210);
 		head_board.setBackground(Color.WHITE);
@@ -103,7 +105,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
