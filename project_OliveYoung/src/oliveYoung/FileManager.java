@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class FileManager {
 	public static FileManager instance = new FileManager();
+	
 	void save(String inputData, String fileName) {
 		String data = inputData;
 		FileWriter fw = null;
@@ -46,7 +47,47 @@ public class FileManager {
 					}
 					if (line != null) {
 						data = line;
-						ItemManager.instance.loadItem(data);
+						ItemManager.instance.loadItemList(data);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (fr != null) {
+					try {
+						fr.close();
+					} catch (IOException e) {
+					}
+				}
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+		}
+
+	}
+	public void loadStore(String fileName) {
+		String data = "";
+		File file = new File(fileName);
+		FileReader fr = null;
+		BufferedReader br = null;
+
+		if (file.exists()) {
+
+			try {
+				fr = new FileReader(file);
+				br = new BufferedReader(fr);
+				while (true) {
+					String line = br.readLine();
+					if (line == null) {
+						break;
+					}
+					if (line != null) {
+						data = line;
+						StoreManager.instance.loadStoreList(data);
 					}
 				}
 			} catch (Exception e) {
@@ -103,6 +144,7 @@ public class FileManager {
 					break;
 				}else {
 					data += line;
+					data += "\n";
 				}
 				}
 			} catch (IOException e) {

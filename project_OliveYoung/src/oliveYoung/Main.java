@@ -12,7 +12,8 @@ public class Main {
 		
 		FileManager.instance.load("item.txt");
 		FileManager.instance.loadUser("user.txt");
-		
+		FileManager.instance.loadStore("store.txt");
+		StoreManager.instance.printAll();
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();

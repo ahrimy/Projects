@@ -11,7 +11,10 @@ public class Item {
 
 	public Item() {
 	}
-
+public void print(){
+	System.out.println(category+" "+itemName+" "+imageName+" "+price+" "+count+" "+onlyOnline);
+	
+}
 	public Item(String category, String itemName, String imageName, int price, int count, boolean onlyOnline) {
 		this.category = category;
 		this.itemName = itemName;
@@ -20,7 +23,23 @@ public class Item {
 		this.count = count;
 		this.onlyOnline = onlyOnline;
 	}
-
+public String saveItem(){
+	String data = "";
+	data+=category;
+	data+="_";
+	data+=itemName;
+	data+="_";
+	data+=imageName;
+	data+="_";
+	data+=price;
+	data+="_";
+	data+=count;
+	data+="_";
+	data+=onlyOnline;
+	data+="\n";
+	
+	return data;
+}
 	public boolean isOnlyOnline() {
 		return onlyOnline;
 	}

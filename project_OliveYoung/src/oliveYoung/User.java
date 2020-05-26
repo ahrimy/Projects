@@ -7,5 +7,9 @@ public class User {
 	String userId;
 	String userPw;
 	
+	String userCity;
+	String userStreet;
+	int userCode; // 4ÀÚ¸®¼ö
+	
 	Cart cart = new Cart();	
 }
