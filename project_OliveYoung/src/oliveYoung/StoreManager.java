@@ -61,19 +61,21 @@ public class StoreManager {
 		}
 	}
 
-	public String findStore(String city, String street, int code) {
+	public Store findStore(String city, String street, int code) {
 		String storeName = "";
+		Store temp = null;
 		if (storeList.get(city) != null) {
 			for (int i = 0; i < storeList.get(city).size(); i++) {
 				if (storeList.get(city).get(i).getStreet().equals(street)
 						&& storeList.get(city).get(i).getStartCode() <= code
 						&& storeList.get(city).get(i).getLastCode() >= code) {
 					storeName = storeList.get(city).get(i).getStoreName();
+					temp = storeList.get(city).get(i);
 					break;
 				}
 			}
 		}
-		return storeName;
+		return temp;
 	}
 
 	public int storeIndex(String city, Store store) {

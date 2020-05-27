@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class ItemDetailedPanel extends JPanel implements ActionListener {
 
@@ -32,6 +33,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 	JCheckBox checkDeliveryToday;
 	JButton deliveryOption;
 	JButton checkAvailableStore;
+	JLabel deliveryStore;
 	String[][] labelList = { { "판매가", "" }, { "카드할인혜택", "The CJ카드 추가 10%" }, { "CJ ONE 포인트 예상적립", "2%적립" },
 			{ "배송비", "2,500원(결제금액 20,000원 이상 무료)" }, { "배송방법", "올리브영 배송" }, { "배송기간", "평균 3일 이내 배송" },
 			{ "상품 금액 합계", "" } };
@@ -69,23 +71,32 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		deliveryToday = new JLabel();
 		checkDeliveryToday = new JCheckBox();
 		deliveryOption = new JButton();
+		deliveryStore = new JLabel();
 		deliveryOption();
 
 	}
 
 	public void deliveryOption() {
-		deliveryToday.setBounds(1000, 550, 600, 50);
+		deliveryToday.setBounds(1000, 560, 600, 40);
 		deliveryToday.setFont(new Font("", Font.BOLD, 20));
-		deliveryToday.setText("          오늘드림으로 받아보시겠어요?");
+		deliveryToday.setText("오늘드림으로 받아보시겠어요?");
+		deliveryToday.setHorizontalAlignment(SwingConstants.CENTER);
+//		deliveryToday.setOpaque(true);
 		mainPart.add(deliveryToday);
 
-		checkDeliveryToday.setBounds(30, 15, 20, 20);
+//		deliveryStore.setOpaque(true);
+		deliveryStore.setBounds(1000, 600, 600, 40);
+		deliveryStore.setFont(new Font("",Font.BOLD,20));
+		deliveryStore.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		mainPart.add(deliveryStore);
+		checkDeliveryToday.setBounds(130, 10, 20, 20);
 		checkDeliveryToday.addActionListener(this);
 		checkDeliveryToday.setBackground(Color.white);
 		checkDeliveryToday.setBorder(null);
 		deliveryToday.add(checkDeliveryToday);
 
-		deliveryOption.setBounds(360, 10, 100, 30);
+		deliveryOption.setBounds(480, 10, 100, 30);
 		deliveryOption.setFont(new Font("", Font.BOLD, 15));
 		deliveryOption.setText("배송옵션보기");
 		deliveryOption.setForeground(Color.LIGHT_GRAY);
@@ -96,7 +107,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 	}
 
 	public void setButton() {
-		cart.setBounds(1000, 600, 250, 100);
+		cart.setBounds(1000, 650, 250, 50);
 		cart.setBackground(Color.WHITE);
 		cart.setText("장바구니");
 		cart.setFont(new Font("", Font.BOLD, 20));
@@ -104,7 +115,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		cart.addActionListener(this);
 		mainPart.add(cart);
 
-		purchase.setBounds(1300, 600, 250, 100);
+		purchase.setBounds(1300, 650, 250, 50);
 		purchase.setBackground(Color.PINK);
 		purchase.setText("바로구매");
 		purchase.setFont(new Font("", Font.BOLD, 20));
@@ -112,7 +123,8 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		purchase.addActionListener(this);
 		mainPart.add(purchase);
 
-		checkAvailableStore.setBounds(1100, 700, 500, 110);
+		checkAvailableStore.setBounds(1100, 700, 500, 50);
+		checkAvailableStore.setFont(new Font("", Font.BOLD, 20));
 		checkAvailableStore.setText("구매 가능 매장을 확인하세요");
 		checkAvailableStore.setBackground(Color.white);
 		checkAvailableStore.setBorder(null);
@@ -224,17 +236,29 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 			}
 		}
 		if (e.getSource() == checkDeliveryToday) {
-			if (!checkDeliveryToday.isSelected()) {
+			if (checkDeliveryToday.isSelected()) {
 				if (UserManager.logIdx == -1) {
 					JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
 					checkDeliveryToday.setSelected(false);
 				} else {
-					String data = StoreManager.instance.findStore(
+
+					String data = "";
+					Store temp = StoreManager.instance.findStore(
 							UserManager.usermanager.userList.get(UserManager.logIdx).userCity,
 							UserManager.usermanager.userList.get(UserManager.logIdx).userStreet,
 							UserManager.usermanager.userList.get(UserManager.logIdx).userCode);
-					System.out.println(data);
+					if (temp != null) {
+						data = temp.getStoreName()+" : ";
+						data+=temp.findItem(item);
+						deliveryStore.setText(data);
+					}else{
+						JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);
+						checkDeliveryToday.setSelected(false);
+					}
+
 				}
+			}else{
+				deliveryStore.setText("");
 			}
 		}
 		if (e.getSource() == checkAvailableStore) {

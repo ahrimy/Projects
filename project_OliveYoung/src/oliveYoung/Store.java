@@ -24,6 +24,26 @@ public class Store {
 			itemList.get(i).print();
 		}
 	}
+public String findItem(Item item){
+	String data="";
+	int check = -1;
+	for(int i=0;i<itemList.size();i++){
+		if(itemList.get(i).getItemName().equals(item.getItemName())){
+			check=i;
+			break;
+		}
+	}
+	if(check==-1){
+		data="판매하지 않는 상품";
+	}else{
+		if(itemList.get(check).getCount()==0){
+			data = "재고 없음";
+		}else{
+			data = "구매가능";
+		}
+	}
+	return data;
+}
 	public Store( String city, String street, int startCode, int lastCode, String storeName) {
 
 		this.city = city;

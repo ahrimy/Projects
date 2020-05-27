@@ -2,6 +2,7 @@ package oliveYoung;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,15 +22,19 @@ public class StoreListPanel extends JPanel implements ActionListener {
 	JLabel searchTitle;
 	JButton searchBtn;
 	JTextField searchArea;
-	JLabel[] list;
-	ArrayList<Store> storeList;
+	JLabel[] storeNameList;
+	JLabel[] storeStatus;
+	ArrayList<Store> storeList = null;
 
 	public StoreListPanel(Item item) {
 		setLayout(null);
+		setBackground(Color.WHITE);
 		this.item = item;
 		back = new JButton("X");
 		back.setBounds(1300, 50, 50, 50);
-		back.setBackground(Color.LIGHT_GRAY);
+		back.setBackground(Color.BLACK);
+		back.setForeground(Color.white);
+		back.setFont(new Font("",Font.BOLD,20));
 		back.addActionListener(this);
 		add(back);
 
@@ -41,7 +46,7 @@ public class StoreListPanel extends JPanel implements ActionListener {
 
 		searchTitle = new JLabel("확인하고 싶은 도시명 입력");
 		searchTitle.setBounds(600, 100, 700, 50);
-		searchTitle.setForeground(Color.GREEN);
+		searchTitle.setForeground(Color.DARK_GRAY);
 		add(searchTitle);
 
 		searchBtn = new JButton();
@@ -52,9 +57,10 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		searchArea.setBounds(600, 150, 700, 50);
 		searchArea.setBackground(null);
 		add(searchArea);
-		searchBtn.setBounds(385, 8, 35, 35);
+		searchBtn.setBounds(650, 8, 35, 35);
 		searchBtn.setBackground(Color.white);
 		searchBtn.setBorder(null);
+		searchBtn.addActionListener(this);
 		searchArea.add(searchBtn);
 		try {
 			Image img = new ImageIcon("./src/images/ico_search21x212.png").getImage().getScaledInstance(35, 35,
@@ -63,6 +69,41 @@ public class StoreListPanel extends JPanel implements ActionListener {
 
 		} catch (Exception ex) {
 			System.out.println(ex);
+		}
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+		try {
+			Thread.sleep(10);
+			repaint();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		if (storeList != null) {
+			int storeCount = storeList.size();
+			storeNameList = new JLabel[storeCount];
+			storeStatus = new JLabel[storeCount];
+			LineBorder lineBorder = new LineBorder(Color.LIGHT_GRAY, 1, false);
+			Font font = new Font("",Font.PLAIN,15);
+			for (int i = 0; i < storeCount; i++) {
+				
+				storeNameList[i]=new JLabel();
+				storeNameList[i].setFont(font);
+				storeNameList[i].setBounds(600, 300 + (i * 50), 600, 20);
+				storeNameList[i].setText(storeList.get(i).getStoreName());
+				storeNameList[i].setBorder(lineBorder);
+				
+				storeStatus[i] = new JLabel();
+				storeStatus[i].setBounds(600, 320 + (i * 50), 600, 20);
+				storeStatus[i].setFont(font);
+				storeStatus[i].setText(storeList.get(i).findItem(item));
+				
+				add(storeNameList[i]);
+				add(storeStatus[i]);
+			}
 		}
 	}
 
