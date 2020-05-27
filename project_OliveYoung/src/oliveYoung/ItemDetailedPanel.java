@@ -68,11 +68,21 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		purchase = new JButton();
 		checkAvailableStore = new JButton();
 		setButton();
+
 		deliveryToday = new JLabel();
-		checkDeliveryToday = new JCheckBox();
-		deliveryOption = new JButton();
-		deliveryStore = new JLabel();
-		deliveryOption();
+		if (item.isOnlyOnline()) {
+			deliveryToday.setBounds(1000, 560, 600, 40);
+			deliveryToday.setFont(new Font("", Font.BOLD, 20));
+			deliveryToday.setText("오늘드림 불가 상품(온라인 판매)");
+			deliveryToday.setHorizontalAlignment(SwingConstants.CENTER);
+			mainPart.add(deliveryToday);
+		} else {
+			deliveryToday = new JLabel();
+			checkDeliveryToday = new JCheckBox();
+			deliveryOption = new JButton();
+			deliveryStore = new JLabel();
+			deliveryOption();
+		}
 
 	}
 
@@ -81,14 +91,14 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		deliveryToday.setFont(new Font("", Font.BOLD, 20));
 		deliveryToday.setText("오늘드림으로 받아보시겠어요?");
 		deliveryToday.setHorizontalAlignment(SwingConstants.CENTER);
-//		deliveryToday.setOpaque(true);
+		// deliveryToday.setOpaque(true);
 		mainPart.add(deliveryToday);
 
-//		deliveryStore.setOpaque(true);
+		// deliveryStore.setOpaque(true);
 		deliveryStore.setBounds(1000, 600, 600, 40);
-		deliveryStore.setFont(new Font("",Font.BOLD,20));
+		deliveryStore.setFont(new Font("", Font.BOLD, 20));
 		deliveryStore.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		mainPart.add(deliveryStore);
 		checkDeliveryToday.setBounds(130, 10, 20, 20);
 		checkDeliveryToday.addActionListener(this);
@@ -123,12 +133,19 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		purchase.addActionListener(this);
 		mainPart.add(purchase);
 
-		checkAvailableStore.setBounds(1100, 700, 500, 50);
+		checkAvailableStore.setBounds(1100, 710, 500, 50);
 		checkAvailableStore.setFont(new Font("", Font.BOLD, 20));
 		checkAvailableStore.setText("구매 가능 매장을 확인하세요");
 		checkAvailableStore.setBackground(Color.white);
 		checkAvailableStore.setBorder(null);
 		checkAvailableStore.addActionListener(this);
+		try {
+			Image img = new ImageIcon("./src/images/logo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			checkAvailableStore.setIcon(new ImageIcon(img));
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 		mainPart.add(checkAvailableStore);
 
 	}
@@ -241,24 +258,44 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 					JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
 					checkDeliveryToday.setSelected(false);
 				} else {
-
 					String data = "";
 					Store temp = StoreManager.instance.findStore(
 							UserManager.usermanager.userList.get(UserManager.logIdx).userCity,
 							UserManager.usermanager.userList.get(UserManager.logIdx).userStreet,
 							UserManager.usermanager.userList.get(UserManager.logIdx).userCode);
 					if (temp != null) {
-						data = temp.getStoreName()+" : ";
-						data+=temp.findItem(item);
+						String status = temp.findItem(item);
+						if (status.equals("재고 없음")) {
+							cart.setBackground(Color.GRAY);
+							cart.setText("일시 품절");
+							cart.setForeground(Color.white);
+							purchase.setBackground(Color.white);
+							purchase.setText("재입고 알림");
+							purchase.setForeground(Color.pink);
+						}else if(status.equals("판매하지 않는 상품")){
+							JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);
+							checkDeliveryToday.setSelected(false);						}
+						data = temp.getStoreName() + " : ";
+						data += status;
 						deliveryStore.setText(data);
-					}else{
+					} else {
+						deliveryStore.setText("오늘 드림 가능한 매장이 없음");
 						JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);
 						checkDeliveryToday.setSelected(false);
 					}
 
 				}
-			}else{
+			} else {
 				deliveryStore.setText("");
+				if(cart.getText().equals("일시 품절")){
+					cart.setBackground(Color.WHITE);
+					cart.setText("장바구니");
+					cart.setForeground(Color.PINK);
+
+					purchase.setBackground(Color.PINK);
+					purchase.setText("바로구매");
+					purchase.setForeground(Color.WHITE);
+				}
 			}
 		}
 		if (e.getSource() == checkAvailableStore) {

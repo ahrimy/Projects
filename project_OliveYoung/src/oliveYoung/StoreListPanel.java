@@ -24,7 +24,9 @@ public class StoreListPanel extends JPanel implements ActionListener {
 	JTextField searchArea;
 	JLabel[] storeNameList;
 	JLabel[] storeStatus;
+	JLabel listArea;
 	ArrayList<Store> storeList = null;
+	boolean isSearched;
 
 	public StoreListPanel(Item item) {
 		setLayout(null);
@@ -34,7 +36,7 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		back.setBounds(1300, 50, 50, 50);
 		back.setBackground(Color.BLACK);
 		back.setForeground(Color.white);
-		back.setFont(new Font("",Font.BOLD,20));
+		back.setFont(new Font("", Font.BOLD, 20));
 		back.addActionListener(this);
 		add(back);
 
@@ -44,9 +46,10 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		title.setForeground(Color.black);
 		add(title);
 
-		searchTitle = new JLabel("확인하고 싶은 도시명 입력");
-		searchTitle.setBounds(600, 100, 700, 50);
-		searchTitle.setForeground(Color.DARK_GRAY);
+		searchTitle = new JLabel("도시명 입력");
+		searchTitle.setFont(new Font("", Font.BOLD, 20));
+		searchTitle.setBounds(650, 100, 650, 50);
+		searchTitle.setForeground(Color.green);
 		add(searchTitle);
 
 		searchBtn = new JButton();
@@ -54,10 +57,10 @@ public class StoreListPanel extends JPanel implements ActionListener {
 
 		LineBorder lineBorder = new LineBorder(new Color(153, 255, 51), 3, true);
 		searchArea.setBorder(lineBorder);
-		searchArea.setBounds(600, 150, 700, 50);
+		searchArea.setBounds(650, 150, 650, 50);
 		searchArea.setBackground(null);
 		add(searchArea);
-		searchBtn.setBounds(650, 8, 35, 35);
+		searchBtn.setBounds(600, 8, 35, 35);
 		searchBtn.setBackground(Color.white);
 		searchBtn.setBorder(null);
 		searchBtn.addActionListener(this);
@@ -69,6 +72,45 @@ public class StoreListPanel extends JPanel implements ActionListener {
 
 		} catch (Exception ex) {
 			System.out.println(ex);
+		}
+		listArea = new JLabel();
+		listArea.setBounds(650, 200, 700, 800);
+		listArea.setBackground(Color.white);
+		listArea.setOpaque(true);
+		add(listArea);
+	}
+
+	public void searchResult() {
+		Font font = new Font("", Font.PLAIN, 20);
+		if (storeList != null) {
+			int storeCount = storeList.size();
+			storeNameList = new JLabel[storeCount];
+			storeStatus = new JLabel[storeCount];
+			LineBorder lineBorder = new LineBorder(Color.LIGHT_GRAY, 1, false);
+
+			for (int i = 0; i < storeCount; i++) {
+
+				storeNameList[i] = new JLabel();
+				storeNameList[i].setFont(font);
+				storeNameList[i].setBounds(20, 20 + (i * 80), 600, 30);
+				storeNameList[i].setText(storeList.get(i).getStoreName());
+				storeNameList[i].setBorder(lineBorder);
+
+				storeStatus[i] = new JLabel();
+				storeStatus[i].setBounds(20, 50 + (i * 80), 600, 30);
+				storeStatus[i].setFont(font);
+				storeStatus[i].setText(storeList.get(i).findItem(item));
+
+				listArea.add(storeNameList[i]);
+				listArea.add(storeStatus[i]);
+			}
+		} else {
+			storeNameList = new JLabel[1];
+			storeNameList[0] = new JLabel();
+			storeNameList[0].setFont(font);
+			storeNameList[0].setBounds(20, 20, 600, 30);
+			storeNameList[0].setText("검색 결과 없음");
+			listArea.add(storeNameList[0]);
 		}
 	}
 
@@ -82,28 +124,9 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		if (storeList != null) {
-			int storeCount = storeList.size();
-			storeNameList = new JLabel[storeCount];
-			storeStatus = new JLabel[storeCount];
-			LineBorder lineBorder = new LineBorder(Color.LIGHT_GRAY, 1, false);
-			Font font = new Font("",Font.PLAIN,15);
-			for (int i = 0; i < storeCount; i++) {
-				
-				storeNameList[i]=new JLabel();
-				storeNameList[i].setFont(font);
-				storeNameList[i].setBounds(600, 300 + (i * 50), 600, 20);
-				storeNameList[i].setText(storeList.get(i).getStoreName());
-				storeNameList[i].setBorder(lineBorder);
-				
-				storeStatus[i] = new JLabel();
-				storeStatus[i].setBounds(600, 320 + (i * 50), 600, 20);
-				storeStatus[i].setFont(font);
-				storeStatus[i].setText(storeList.get(i).findItem(item));
-				
-				add(storeNameList[i]);
-				add(storeStatus[i]);
-			}
+		if (isSearched) {
+			searchResult();
+			isSearched = false;
 		}
 	}
 
@@ -116,7 +139,8 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		} else if (e.getSource() == searchBtn) {
 			String data = searchArea.getText();
 			storeList = StoreManager.instance.storeList.get(data);
-
+			isSearched = true;
+			listArea.removeAll();
 		}
 	}
 

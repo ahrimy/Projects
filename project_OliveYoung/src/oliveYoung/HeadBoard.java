@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -23,6 +24,7 @@ public class HeadBoard extends JPanel implements ActionListener {
 	JButton[] subBtn;
 	JButton searchBtn;
 	JTextField searchArea;
+	JLabel user;
 
 	public HeadBoard() {
 		setLayout(null);
@@ -33,6 +35,13 @@ public class HeadBoard extends JPanel implements ActionListener {
 		subBtn = new JButton[2];
 		searchBtn = new JButton();
 		searchArea = new JTextField();
+		if (UserManager.logIdx != -1) {
+			user = new JLabel();
+			user.setBounds(1000, 10, 50, 30);
+			user.setFont(new Font("",Font.BOLD,12));
+			user.setText(UserManager.usermanager.userList.get(UserManager.logIdx).userName);
+			add(user);
+		}
 		setButton();
 		setImage();
 		addButton();
@@ -188,8 +197,8 @@ public class HeadBoard extends JPanel implements ActionListener {
 		} else if (e.getSource() == searchBtn) {
 
 		}
-		if (e.getSource() == menuBtn[0]) {
-			ItemPanel.pageName = menuBtn[0].getText();
+		if (e.getSource() == menuBtn[2]) {
+			ItemPanel.pageName = menuBtn[2].getText();
 			Main.frame.setContentPane(new ItemPanel("전체"));
 			Main.frame.revalidate();
 		}
@@ -207,7 +216,7 @@ public class HeadBoard extends JPanel implements ActionListener {
 			if (headBtn[1].getText().equals("마이페이지")) {
 				Main.frame.setContentPane(new MypagePanel());
 				Main.frame.revalidate();
-			
+
 			} else {
 				Main.frame.setContentPane(new LoginPanel());
 				Main.frame.revalidate();

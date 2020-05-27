@@ -28,7 +28,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 	JLabel emptyLabel;
 	public static String pageName;
 	String ctgryName;
-	String categoryList[] = { "전체", "스킨케어", "메이크업", "바디케어", "향수/디퓨져", "미용소품", "남성", "건강/위생용품", "건강식품", "일반식품",
+	String categoryList[] = { "전체", "스킨케어", "메이크업", "바디케어", "헤어케어", "미용소품", "남성", "건강/위생용품", "건강식품", "일반식품",
 			"반려동물", "잡화" };
 
 	public ItemPanel(String name) {
@@ -38,9 +38,9 @@ public class ItemPanel extends JPanel implements ActionListener {
 		int check = -1;
 		if (name.equals("전체")) {
 			list[0] = ItemManager.instance.itemList.get("스킨케어").get(0);
-			list[1] = ItemManager.instance.itemList.get("스킨케어").get(2);
-			list[2] = ItemManager.instance.itemList.get("메이크업").get(0);
-			list[3] = ItemManager.instance.itemList.get("메이크업").get(2);
+			list[1] = ItemManager.instance.itemList.get("메이크업").get(2);
+			list[2] = ItemManager.instance.itemList.get("바디케어").get(0);
+			list[3] = ItemManager.instance.itemList.get("헤어케어").get(2);
 			check = -2;
 
 		} else {
