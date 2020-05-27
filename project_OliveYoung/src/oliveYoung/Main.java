@@ -10,10 +10,9 @@ public class Main {
 	static JFrame frame = new JFrame("oliveYoung");
 	public static void main(String[] args) {
 		
-		FileManager.instance.load("item.txt");
+		FileManager.instance.loadItem("item.txt");
 		FileManager.instance.loadUser("user.txt");
 		FileManager.instance.loadStore("store.txt");
-		StoreManager.instance.printAll();
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();

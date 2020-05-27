@@ -29,7 +29,7 @@ public class FileManager {
 
 	}
 
-	public void load(String fileName) {
+	public void loadItem(String fileName) {
 		String data = "";
 		File file = new File(fileName);
 		FileReader fr = null;

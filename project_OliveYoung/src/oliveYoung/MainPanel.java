@@ -152,7 +152,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 		// TODO Auto-generated method stub
 		int x = e.getX();
 		int y = e.getY();
-		System.out.println(x + " " + y);
+//		System.out.println(x + " " + y);
 		for (int i = 0; i < 13; i++) {
 			if (y > topCtgry[i].getY()+210 && y < 210+topCtgry[i].getY() + 38&&x > 299 && x < 491) {
 				topCtgry[i].setOpaque(true);
