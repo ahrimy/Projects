@@ -16,35 +16,8 @@ public class Store {
 	public Store() {
 
 	}
-	public void print(){
-		System.out.println(city);
-		System.out.println(street);System.out.println(startCode+" "+lastCode);
-		System.out.println(storeName);
-		for(int i=0;i<itemList.size();i++){
-			itemList.get(i).print();
-		}
-	}
-public String findItem(Item item){
-	String data="";
-	int check = -1;
-	for(int i=0;i<itemList.size();i++){
-		if(itemList.get(i).getItemName().equals(item.getItemName())){
-			check=i;
-			break;
-		}
-	}
-	if(check==-1){
-		data="판매하지 않는 상품";
-	}else{
-		if(itemList.get(check).getCount()==0){
-			data = "재고 없음";
-		}else{
-			data = "구매가능";
-		}
-	}
-	return data;
-}
-	public Store( String city, String street, int startCode, int lastCode, String storeName) {
+
+	public Store(String city, String street, int startCode, int lastCode, String storeName) {
 
 		this.city = city;
 		this.street = street;
@@ -55,6 +28,56 @@ public String findItem(Item item){
 		itemList = new ArrayList<>();
 	}
 
+	public void print() {
+		System.out.println(city);
+		System.out.println(street);
+		System.out.println(startCode + " " + lastCode);
+		System.out.println(storeName);
+		for (int i = 0; i < itemList.size(); i++) {
+			itemList.get(i).print();
+		}
+	}
+
+	public String findItem(Item item) {
+		String data = "";
+		int check = -1;
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemList.get(i).getItemName().equals(item.getItemName())) {
+				check = i;
+				break;
+			}
+		}
+		if (check == -1) {
+			data = "판매하지 않는 상품";
+		} else {
+			if (itemList.get(check).getCount() == 0) {
+				data = "재고 없음";
+			} else {
+				data = "구매가능";
+			}
+		}
+		return data;
+	}
+	/*add item*/
+	public void putItem(Item item){
+		for(int i=0;i<itemList.size();i++){
+			if(itemList.get(i).getItemName().equals(item.getItemName())){
+				itemList.get(i).updateCount(item.getCount());
+			}
+		}
+		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
+	}
+	
+	/*reduce count of item*/
+	public void reduceItem(Item item){
+		for(int i=0;i<itemList.size();i++){
+			if(itemList.get(i).getItemName().equals(item.getItemName())){
+				itemList.get(i).updateCount(-item.getCount());
+				break;
+			}
+		}
+		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
+	}
 	public String saveStore() {
 		String data = "";
 		data += city;
@@ -91,7 +114,7 @@ public String findItem(Item item){
 		if (check == -1) {
 			itemList.add(temp);
 		}
-		
+
 	}
 
 	public String getCity() {
@@ -125,8 +148,6 @@ public String findItem(Item item){
 	public void setLastCode(int lastCode) {
 		this.lastCode = lastCode;
 	}
-
-
 
 	public String getStoreName() {
 		return storeName;

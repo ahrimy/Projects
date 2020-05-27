@@ -8,17 +8,6 @@ public class StoreManager {
 	static StoreManager instance = new StoreManager();
 	Store currentStore = null;
 
-	public String saveStoreList() {
-		String data = "";
-		for (String key : storeList.keySet()) {
-			for (int i = 0; i < storeList.get(key).size(); i++) {
-				data += storeList.get(key).get(i).saveStore();
-			}
-		}
-		data.substring(0, data.length() - 1);
-		return data;
-	}
-
 	public void printAll() {
 		for (String key : storeList.keySet()) {
 			for (int i = 0; i < storeList.get(key).size(); i++) {
@@ -27,32 +16,19 @@ public class StoreManager {
 		}
 	}
 
-	public void loadStoreList(String data) {
-		String info[] = data.split("_");
-		if (info.length == 5) {
-			Store temp = new Store(info[0], info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4]);
-			setCity(info[0], temp);
-			currentStore = temp;
-		} else {
-			currentStore.loadStore(data);
-		}
-	}
-
 	public void setCity(String city, Store store) {
 		int check = 0;
-		// 이미 존재하는 카테고리
 		for (String key : storeList.keySet()) {
 			if (key.equals(city)) {
 				check = 1;
 			}
 		}
-		// 존재하지 않는 카테고리 추가
 		if (check == 0) {
 			storeList.put(city, new ArrayList<Store>());
 		}
 		addStore(city, store);
 	}
-
+	
 	public void addStore(String city, Store store) {
 		int check = storeIndex(city, store);
 		if (check == -1) {
@@ -86,5 +62,27 @@ public class StoreManager {
 			}
 		}
 		return check;
+	}
+
+	public String saveStoreList() {
+		String data = "";
+		for (String key : storeList.keySet()) {
+			for (int i = 0; i < storeList.get(key).size(); i++) {
+				data += storeList.get(key).get(i).saveStore();
+			}
+		}
+		data.substring(0, data.length() - 1);
+		return data;
+	}
+
+	public void loadStoreList(String data) {
+		String info[] = data.split("_");
+		if (info.length == 5) {
+			Store temp = new Store(info[0], info[1], Integer.parseInt(info[2]), Integer.parseInt(info[3]), info[4]);
+			setCity(info[0], temp);
+			currentStore = temp;
+		} else {
+			currentStore.loadStore(data);
+		}
 	}
 }

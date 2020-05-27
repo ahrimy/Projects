@@ -9,15 +9,5 @@ public class Category {
 
 	String[] detailedList2 = {"시트마스크","겔마스크","워시오프팩","슬리핑팩","코팩","립/아이패치"};
 	
-	String[] middleList = {"페이셜케어","마스크팩","클렌징","선케어","더모 코스메틷"};
-	
-	
-//
-//	public Category(){
-//		list.put("스킨케어",new HashMap().put("페이셜케어", detailedList1));
-//		
-//	}
-	
-
-	
+	String[] middleList = {"페이셜케어","마스크팩","클렌징","선케어","더모 코스메틷"};	
 }
