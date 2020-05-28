@@ -37,7 +37,14 @@ public class Store {
 			itemList.get(i).print();
 		}
 	}
-
+	public int getItemCount(Item item){
+		for (int i=0;i<itemList.size();i++){
+			if(item.getImageName().equals(itemList.get(i).getItemName())){
+				return itemList.get(i).getCount();
+			}
+		}
+		return 0;
+	}
 	public String findItem(Item item) {
 		String data = "";
 		int check = -1;
@@ -51,20 +58,22 @@ public class Store {
 			data = "판매하지 않는 상품";
 		} else {
 			if (itemList.get(check).getCount() == 0) {
-				data = "재고 없음";
+				data = "현재 해당 지점에 재고 없음";
 			} else {
 				data = "구매가능";
+				data+="(남은수량 : "+itemList.get(check).getCount()+")";
 			}
 		}
 		return data;
 	}
-	/*add item*/
+	/*add count of item*/
 	public void putItem(Item item){
 		for(int i=0;i<itemList.size();i++){
 			if(itemList.get(i).getItemName().equals(item.getItemName())){
 				itemList.get(i).updateCount(item.getCount());
 			}
 		}
+		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
 		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
 	}
 	
@@ -76,6 +85,7 @@ public class Store {
 				break;
 			}
 		}
+		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
 		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
 	}
 	public String saveStore() {
@@ -114,7 +124,6 @@ public class Store {
 		if (check == -1) {
 			itemList.add(temp);
 		}
-
 	}
 
 	public String getCity() {

@@ -35,7 +35,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener, 
 		setLayout(null);
 		addMouseListener(this); // 마우스 와 패널 연결
 		addMouseMotionListener(this); // 마우스 모션 과 패널 연결
-		
+		this.setBackground(Color.WHITE);
 		/*상단화면*/
 		head_board = new HeadBoard();
 		head_board.setSize(1900, 210);

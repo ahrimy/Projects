@@ -18,7 +18,8 @@ public class UserManager {
 	static int logIdx = -1;
 
 	// 회원가입
-	public void join(String joinName, String joinId, String joinPw, String joinCity, String joinStreet, String joinCode) {
+	public void join(String joinName, String joinId, String joinPw, String joinCity, String joinStreet,
+			String joinCode) {
 		int check = -1;
 
 		for (int i = 0; i < userList.size(); i++) {
@@ -36,7 +37,7 @@ public class UserManager {
 			temp.userPw = joinPw;
 			temp.userCity = joinCity;
 			temp.userStreet = joinStreet;
-			
+
 			int code = Integer.parseInt(joinCode);
 			temp.userCode = code;
 
@@ -99,9 +100,10 @@ public class UserManager {
 	}
 
 	// 회원정보수정
-	public void updateMember(String updateName, String  updateId, String  updatePw, String  updateCity, String  updateStreet, String  updateCode) {
+	public void updateMember(String updateName, String updatePw, String updateCity, String updateStreet,
+			String updateCode) {
 		userList.get(UserManager.usermanager.logIdx).userName = updateName;
-		userList.get(UserManager.usermanager.logIdx).userId = updateId;
+		// userList.get(UserManager.usermanager.logIdx).userId = updateId;
 		userList.get(UserManager.usermanager.logIdx).userPw = updatePw;
 		userList.get(UserManager.usermanager.logIdx).userCity = updateCity;
 		userList.get(UserManager.usermanager.logIdx).userStreet = updateStreet;
@@ -117,21 +119,29 @@ public class UserManager {
 	// 회원탈퇴
 	public void removeMember() {
 		if (logIdx != -1) {
-			
+
 			int rs = JOptionPane.showConfirmDialog(null, "회원 탈퇴를 진행하시겠습니까?", "안내", JOptionPane.YES_NO_OPTION);
-			if(rs == JOptionPane.YES_OPTION) {
+			if (rs == JOptionPane.YES_OPTION) {
 				
+				// qna리스트에서 로그인한 유저(logIdx)와 일치하는 ID의 정보 삭제 ==> 저장된 데이터 콘솔에 출력
+				QnAManager.qnaManager.removeQnA();
+				
+				// 유저리스트에서 로그인한 idx 삭제
 				userList.remove(logIdx);
 				JOptionPane.showMessageDialog(null, "회원탈퇴 완료!", "안내", JOptionPane.WARNING_MESSAGE);
-				logIdx = -1;
 				
+				logIdx = -1;
+
 				// 회원 탈퇴후 fileManager에 유저 정보 저장
 				FileManager.instance.saveUser(usermanager.saveUser(), "user.txt");
+				
+				// 회원 탈퇴후 fileManaget에 유저 qna정보 저장
+				FileManager.instance.saveQnA(QnAManager.qnaManager.saveQnA(), "qna.txt");
 				
 				Main.frame.setContentPane(new MainPanel());
 				Main.frame.revalidate();
 			}
-			
+
 		}
 	}
 
@@ -151,7 +161,7 @@ public class UserManager {
 			data += userList.get(i).userStreet;
 			data += "/";
 			data += userList.get(i).userCode;
-			
+
 			if (i < userList.size() - 1) {
 				data += "\n";
 			}
@@ -176,7 +186,7 @@ public class UserManager {
 			temp.userCity = userinfo[3];
 			temp.userStreet = userinfo[4];
 			temp.userCode = Integer.parseInt(userinfo[5]);
-			
+
 			userList.add(temp);
 		}
 	}
@@ -190,23 +200,50 @@ public class UserManager {
 				check = i;
 			}
 		}
-		
-		
-		if(check == -1) {
-			JOptionPane.showMessageDialog(null, "회원정보를 찾을 수 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);			
-		}else {
+
+		if (check == -1) {
+			JOptionPane.showMessageDialog(null, "회원정보를 찾을 수 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);
+		} else {
 			pw = userList.get(check).userPw;
-			JOptionPane.showMessageDialog(null, "비밀번호는 " + pw + " 입니다.", "안내", JOptionPane.WARNING_MESSAGE);						
+			JOptionPane.showMessageDialog(null, "비밀번호는 " + pw + " 입니다.", "안내", JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
 
 	// 유저리스트 출력
 	public void printUserList() {
 		for (int i = 0; i < userList.size(); i++) {
 			System.out.println(userList.get(i).userName + ":" + userList.get(i).userId + ":" + userList.get(i).userPw
-					+ ":" + userList.get(i).userCity + ":" + userList.get(i).userStreet + ":" + userList.get(i).userCode);
+					+ ":" + userList.get(i).userCity + ":" + userList.get(i).userStreet + ":"
+					+ userList.get(i).userCode);
 		}
+	}
+
+	// 도시명 리턴
+	public String getCity() {
+		String city = "";
+		city += userList.get(logIdx).userCity;
+
+		return city;
+	}
+
+	// 도로명 리턴
+	public String getStreet() {
+		String street = "";
+		street += userList.get(logIdx).userStreet;
+
+		return street;
+	}
+
+	// 우편번호 리턴
+	public int getCode() {
+		int code = 0;
+		code += userList.get(logIdx).userCode;
+
+		return code;
+	}
+
+	public String getId() {
+		return userList.get(logIdx).userId;
 	}
 
 }

@@ -108,50 +108,55 @@ public class FileManager {
 			}
 		}
 
-	}
-	public void saveUser(String userData, String fileName) {
+	}	public void saveUser(String userData, String fileName) {
 		String data = userData;
-		
+
 		FileWriter fw = null;
-		
+
 		try {
 			fw = new FileWriter(fileName);
 			fw.write(data);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			if(fw != null) {try {fw.close();} catch (IOException e) {e.printStackTrace();}}
-		}	
+		} finally {
+			if (fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
-	
+
 	public void loadUser(String fileName) {
 		String data = "";
-		
+
 		File file = new File(fileName);
 		FileReader fr = null;
 		BufferedReader br = null;
-		
-		if(file.exists()) {
+
+		if (file.exists()) {
 			try {
 				fr = new FileReader(file);
 				br = new BufferedReader(fr);
-				
-				while(true) {
-				String line = br.readLine();
-				
-				if(line == null) {
-					break;
-				}else {
-					data += line;
-					data += "\n";
-				}
+
+				while (true) {
+					String line = br.readLine();
+
+					if (line == null) {
+						break;
+					} else {
+						data += line;
+						data += "\n";
+					}
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}finally {
-				if(fr != null) {
+			} finally {
+				if (fr != null) {
 					try {
 						fr.close();
 					} catch (IOException e) {
@@ -159,7 +164,7 @@ public class FileManager {
 						e.printStackTrace();
 					}
 				}
-				if(br != null) {					
+				if (br != null) {
 					try {
 						br.close();
 					} catch (IOException e) {
@@ -169,8 +174,83 @@ public class FileManager {
 				}
 			}
 			
-		UserManager.usermanager.loadUser(data);
-		
+			// data != null
+			if(data.length() != 0) {
+				UserManager.usermanager.loadUser(data);
+			}
 		}
+	}
+
+	public void saveQnA(String qnaData, String fileName) {
+		String data = qnaData;
+
+		FileWriter fw = null;
+
+		try {
+			fw = new FileWriter(fileName);
+			fw.write(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void loadQnA(String fileName) {
+		String data = "";
+
+		File file = new File(fileName);
+		FileReader fr = null;
+		BufferedReader br = null;
+
+		if (file.exists()) {
+			try {
+				fr = new FileReader(file);
+				br = new BufferedReader(fr);
+
+				while (true) {
+					String line = br.readLine();
+
+					if (line == null) {
+						break;
+					} else {
+						data += line;
+						data += "\n";
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				if (fr != null) {
+					try {
+						fr.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			if(data.length() != 0) {
+			QnAManager.qnaManager.loadQnA(data);
+			}
+		}
+
 	}
 }

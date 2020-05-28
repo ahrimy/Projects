@@ -9,9 +9,12 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -34,16 +37,25 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 	JButton deliveryOption;
 	JButton checkAvailableStore;
 	JLabel deliveryStore;
+	static Popup p ;//
+	JPanel storeList;//
+	JFrame f = new JFrame("pop");
 	String[][] labelList = { { "판매가", "" }, { "카드할인혜택", "The CJ카드 추가 10%" }, { "CJ ONE 포인트 예상적립", "2%적립" },
 			{ "배송비", "2,500원(결제금액 20,000원 이상 무료)" }, { "배송방법", "올리브영 배송" }, { "배송기간", "평균 3일 이내 배송" },
 			{ "상품 금액 합계", "" } };
 
 	public ItemDetailedPanel(Item item) {
 		setLayout(null);
-
 		this.item = new Item(item.getCategory(), item.getItemName(), item.getImageName(), item.getPrice(), 1,
 				item.isOnlyOnline());
-
+		
+		storeList = new StoreListPanel(item);//
+		storeList.setSize(1000,900);
+		
+		storeList.setBorder(new LineBorder(Color.LIGHT_GRAY, 2, true));
+		
+		
+		
 		head_board = new HeadBoard();
 		head_board.setSize(1900, 210);
 		head_board.setBackground(Color.WHITE);
@@ -51,7 +63,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		add(head_board);
 
 		mainPart = new JLabel();
-		mainPart.setBounds(0, 210, 1900, 800);
+		mainPart.setBounds(0, 210, 1900, 900);
 		mainPart.setBackground(Color.WHITE);
 		mainPart.setOpaque(true);
 		add(mainPart);
@@ -132,6 +144,14 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		purchase.setForeground(Color.WHITE);
 		purchase.addActionListener(this);
 		mainPart.add(purchase);
+		if (ItemManager.instance.checkStock(item.getCategory(), item).equals("품절")) {
+			cart.setBackground(Color.GRAY);
+			cart.setText("일시 품절");
+			cart.setForeground(Color.white);
+			purchase.setBackground(Color.white);
+			purchase.setText("재입고 알림");
+			purchase.setForeground(Color.pink);
+		}
 
 		checkAvailableStore.setBounds(1100, 710, 500, 50);
 		checkAvailableStore.setFont(new Font("", Font.BOLD, 20));
@@ -139,6 +159,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 		checkAvailableStore.setBackground(Color.white);
 		checkAvailableStore.setBorder(null);
 		checkAvailableStore.addActionListener(this);
+
 		try {
 			Image img = new ImageIcon("./src/images/logo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 			checkAvailableStore.setIcon(new ImageIcon(img));
@@ -238,56 +259,71 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 			}
 			count.setText(item.getCount() + "");
 			itemInfo[6][1].setText(item.getCount() * item.getPrice() + " 원");
-		}
-		if (e.getSource() == purchase) {
+		} else if (e.getSource() == purchase) {
 			if (UserManager.usermanager.logIdx == -1) {
 				JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
 			} else {
 
 			}
 		} else if (e.getSource() == cart) {
-			if (UserManager.usermanager.logIdx == -1) {
-				JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
-			} else {
-
-			}
-		}
-		if (e.getSource() == checkDeliveryToday) {
-			if (checkDeliveryToday.isSelected()) {
-				if (UserManager.logIdx == -1) {
+			if (cart.getText().equals("장바구니")) {
+				if (UserManager.usermanager.logIdx == -1) {
 					JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
+				} else {
+
+					String data = ItemManager.instance.checkStock(item.getCategory(), item);
+					if (data.equals("구매 가능")) {
+
+					} else if (data.equals("재고 수량 부족")) {
+						JOptionPane.showMessageDialog(null, "재고 수량이 부족합니다.", "안내", JOptionPane.WARNING_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "현재 판매되지 않는 상품입니다.", "안내", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			}
+
+		} else if (e.getSource() == checkDeliveryToday) {
+			if (checkDeliveryToday.isSelected()) {
+				if (cart.getText().equals("일시 품절")) {
 					checkDeliveryToday.setSelected(false);
 				} else {
-					String data = "";
-					Store temp = StoreManager.instance.findStore(
-							UserManager.usermanager.userList.get(UserManager.logIdx).userCity,
-							UserManager.usermanager.userList.get(UserManager.logIdx).userStreet,
-							UserManager.usermanager.userList.get(UserManager.logIdx).userCode);
-					if (temp != null) {
-						String status = temp.findItem(item);
-						if (status.equals("재고 없음")) {
-							cart.setBackground(Color.GRAY);
-							cart.setText("일시 품절");
-							cart.setForeground(Color.white);
-							purchase.setBackground(Color.white);
-							purchase.setText("재입고 알림");
-							purchase.setForeground(Color.pink);
-						}else if(status.equals("판매하지 않는 상품")){
-							JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);
-							checkDeliveryToday.setSelected(false);						}
-						data = temp.getStoreName() + " : ";
-						data += status;
-						deliveryStore.setText(data);
-					} else {
-						deliveryStore.setText("오늘 드림 가능한 매장이 없음");
-						JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내", JOptionPane.WARNING_MESSAGE);
+					if (UserManager.logIdx == -1) {
+						JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
 						checkDeliveryToday.setSelected(false);
+					} else {
+						String data = "";
+						Store temp = StoreManager.instance.findStore(
+								UserManager.usermanager.userList.get(UserManager.logIdx).userCity,
+								UserManager.usermanager.userList.get(UserManager.logIdx).userStreet,
+								UserManager.usermanager.userList.get(UserManager.logIdx).userCode);
+						if (temp != null) {
+							String status = temp.findItem(item);
+							if (status.equals("현재 해당 지점에 재고 없음")) {
+								cart.setBackground(Color.GRAY);
+								cart.setText("일시 품절");
+								cart.setForeground(Color.white);
+								purchase.setBackground(Color.white);
+								purchase.setText("재입고 알림");
+								purchase.setForeground(Color.pink);
+							} else if (status.equals("판매하지 않는 상품")) {
+								JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내",
+										JOptionPane.WARNING_MESSAGE);
+								checkDeliveryToday.setSelected(false);
+							}
+							data = temp.getStoreName() + " : ";
+							data += status;
+							deliveryStore.setText(data);
+						} else {
+							deliveryStore.setText("오늘 드림 가능한 매장이 없음");
+							JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내",
+									JOptionPane.WARNING_MESSAGE);
+							checkDeliveryToday.setSelected(false);
+						}
 					}
-
 				}
 			} else {
 				deliveryStore.setText("");
-				if(cart.getText().equals("일시 품절")){
+				if (cart.getText().equals("일시 품절")) {
 					cart.setBackground(Color.WHITE);
 					cart.setText("장바구니");
 					cart.setForeground(Color.PINK);
@@ -297,10 +333,13 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 					purchase.setForeground(Color.WHITE);
 				}
 			}
-		}
-		if (e.getSource() == checkAvailableStore) {
-			Main.frame.setContentPane(new StoreListPanel(item));
-			Main.frame.revalidate();
+		} else if (e.getSource() == checkAvailableStore) {
+			PopupFactory pf = new PopupFactory();
+			p = pf.getPopup(Main.frame, storeList, 450, 100);
+			p.show();
+			
+//			Main.frame.setContentPane(new StoreListPanel(item));
+//			Main.frame.revalidate();
 		}
 	}
 }

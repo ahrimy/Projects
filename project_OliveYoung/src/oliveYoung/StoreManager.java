@@ -7,7 +7,20 @@ public class StoreManager {
 	HashMap<String, ArrayList<Store>> storeList = new HashMap<>();
 	static StoreManager instance = new StoreManager();
 	Store currentStore = null;
-
+	
+	private StoreManager(){
+		
+	}
+	
+	public int getItemCounts(Item item){
+		int total = 0;
+		for (String key : storeList.keySet()) {
+			for (int i = 0; i < storeList.get(key).size(); i++) {
+				total += storeList.get(key).get(i).getItemCount(item);
+			}
+		}
+		return total;
+	}
 	public void printAll() {
 		for (String key : storeList.keySet()) {
 			for (int i = 0; i < storeList.get(key).size(); i++) {
@@ -15,7 +28,7 @@ public class StoreManager {
 			}
 		}
 	}
-
+	
 	public void setCity(String city, Store store) {
 		int check = 0;
 		for (String key : storeList.keySet()) {
@@ -28,7 +41,7 @@ public class StoreManager {
 		}
 		addStore(city, store);
 	}
-	
+
 	public void addStore(String city, Store store) {
 		int check = storeIndex(city, store);
 		if (check == -1) {

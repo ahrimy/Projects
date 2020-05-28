@@ -89,7 +89,7 @@ public class MypagePanel extends JPanel implements ActionListener, MouseListener
 		add(name_tf);
 
 		id_tf = new JTextField(10);
-		id_tf.setText(UserManager.usermanager.userList.get(UserManager.usermanager.logIdx).userId);
+		id_tf.setText(UserManager.usermanager.getId());
 		id_tf.setBounds(730, 340, 200, 30);
 		id_tf.setBorder(null);
 		id_tf.addActionListener(this);
@@ -161,11 +161,11 @@ public class MypagePanel extends JPanel implements ActionListener, MouseListener
 
 		// 회원정보 수정
 		if (e.getSource() == saveBtn) {
-			if (name_tf.getText().equals("") || id_tf.getText().equals("") || pw_tf.getText().equals("") 
+			if (name_tf.getText().equals("") || pw_tf.getText().equals("") 
 					|| city_tf.getText().equals("") || street_tf.getText().equals("") || code_tf.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "정보를 모두 입력해주세요!", "안내", JOptionPane.WARNING_MESSAGE);
 			} else {
-				UserManager.usermanager.updateMember(name_tf.getText(), id_tf.getText(), pw_tf.getText(), city_tf.getText(), street_tf.getText(), code_tf.getText());
+				UserManager.usermanager.updateMember(name_tf.getText(), pw_tf.getText(), city_tf.getText(), street_tf.getText(), code_tf.getText());
 			}
 		}
 

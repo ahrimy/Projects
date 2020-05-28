@@ -33,7 +33,8 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		setBackground(Color.WHITE);
 		this.item = item;
 		back = new JButton("X");
-		back.setBounds(1300, 50, 50, 50);
+//		back.setBounds(1300, 50, 50, 50);
+		back.setBounds(900, 50, 50, 50);
 		back.setBackground(Color.BLACK);
 		back.setForeground(Color.white);
 		back.setFont(new Font("", Font.BOLD, 20));
@@ -41,14 +42,16 @@ public class StoreListPanel extends JPanel implements ActionListener {
 		add(back);
 
 		title = new JLabel("구매 가능 매장 확인");
-		title.setBounds(600, 50, 700, 50);
+//		title.setBounds(600, 50, 700, 50);
+		title.setBounds(100, 50, 700, 50);
 		title.setFont(new Font("", Font.BOLD, 30));
 		title.setForeground(Color.black);
 		add(title);
 
 		searchTitle = new JLabel("도시명 입력");
 		searchTitle.setFont(new Font("", Font.BOLD, 20));
-		searchTitle.setBounds(650, 100, 650, 50);
+//		searchTitle.setBounds(650, 100, 650, 50);
+		searchTitle.setBounds(150, 100, 650, 50);
 		searchTitle.setForeground(Color.green);
 		add(searchTitle);
 
@@ -57,7 +60,8 @@ public class StoreListPanel extends JPanel implements ActionListener {
 
 		LineBorder lineBorder = new LineBorder(new Color(153, 255, 51), 3, true);
 		searchArea.setBorder(lineBorder);
-		searchArea.setBounds(650, 150, 650, 50);
+//		searchArea.setBounds(650, 150, 650, 50);
+		searchArea.setBounds(150, 150, 650, 50);
 		searchArea.setBackground(null);
 		add(searchArea);
 		searchBtn.setBounds(600, 8, 35, 35);
@@ -74,7 +78,8 @@ public class StoreListPanel extends JPanel implements ActionListener {
 			System.out.println(ex);
 		}
 		listArea = new JLabel();
-		listArea.setBounds(650, 200, 700, 800);
+//		listArea.setBounds(650, 200, 700, 800);
+		listArea.setBounds(150, 200, 700, 500);
 		listArea.setBackground(Color.white);
 		listArea.setOpaque(true);
 		add(listArea);
@@ -100,6 +105,7 @@ public class StoreListPanel extends JPanel implements ActionListener {
 				storeStatus[i].setBounds(20, 50 + (i * 80), 600, 30);
 				storeStatus[i].setFont(font);
 				storeStatus[i].setText(storeList.get(i).findItem(item));
+				
 
 				listArea.add(storeNameList[i]);
 				listArea.add(storeStatus[i]);
@@ -134,8 +140,9 @@ public class StoreListPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == back) {
-			Main.frame.setContentPane(new ItemDetailedPanel(item));
-			Main.frame.revalidate();
+			ItemDetailedPanel.p.hide();
+//			Main.frame.setContentPane(new ItemDetailedPanel(item));
+//			Main.frame.revalidate();
 		} else if (e.getSource() == searchBtn) {
 			String data = searchArea.getText();
 			storeList = StoreManager.instance.storeList.get(data);
