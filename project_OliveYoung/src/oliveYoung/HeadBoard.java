@@ -2,6 +2,7 @@ package oliveYoung;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +13,9 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
@@ -38,7 +41,7 @@ public class HeadBoard extends JPanel implements ActionListener {
 		if (UserManager.logIdx != -1) {
 			user = new JLabel();
 			user.setBounds(1000, 10, 50, 30);
-			user.setFont(new Font("",Font.BOLD,12));
+			user.setFont(new Font("", Font.BOLD, 12));
 			user.setText(UserManager.usermanager.userList.get(UserManager.logIdx).userName);
 			add(user);
 		}
@@ -220,6 +223,22 @@ public class HeadBoard extends JPanel implements ActionListener {
 			} else {
 				Main.frame.setContentPane(new LoginPanel());
 				Main.frame.revalidate();
+			}
+		} else if (headBtn[2] == e.getSource()) {
+			if (headBtn[2].getText().equals("장바구니")) {
+				if (UserManager.usermanager.logIdx == -1) {
+					JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
+				} else {
+					CartAllPanel cartPanel = new CartAllPanel();
+					JScrollPane scroll = new JScrollPane();
+					Dimension size = new Dimension();
+					size.setSize(1920, 1080
+							+ (250 * UserManager.usermanager.userList.get(UserManager.logIdx).cart.cartList.size()));
+					cartPanel.setPreferredSize(size);
+					scroll.setViewportView(cartPanel);
+					Main.frame.setContentPane(scroll);
+					Main.frame.revalidate();
+				}
 			}
 		}
 

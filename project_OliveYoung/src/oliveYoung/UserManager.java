@@ -245,5 +245,16 @@ public class UserManager {
 	public String getId() {
 		return userList.get(logIdx).userId;
 	}
+	
+	public String getName() {
+		return userList.get(logIdx).userName;
+	}
+	
+	public int getCartSize() {
+		return userList.get(logIdx).cart.cartList.size();
+	}
+	public int getBuyListSize() {
+		return userList.get(logIdx).cart.buyList.size();
+	}
 
 }
