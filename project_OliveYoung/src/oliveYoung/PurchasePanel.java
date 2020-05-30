@@ -1,11 +1,13 @@
 package oliveYoung;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-public class PurchasePanel extends JPanel {
+public class PurchasePanel extends JPanel{
 	HeadBoard head_board = null;
 	PurchaseBoard purchase = null;
 	ArrayList<ItemInfo1> itemList= null;
@@ -14,9 +16,8 @@ public class PurchasePanel extends JPanel {
 	public PurchasePanel(Item item, boolean today) {
 		setLayout(null);
 		mainSet();
-		String[] temp = item.getItemName().split(" ");
 		itemList = new ArrayList<ItemInfo1>();
-		itemList.add(new ItemInfo1(item.getImageName(), temp[0], item.getItemName(), item.getPrice(), item.getCount()));
+		itemList.add(new ItemInfo1(item.getImageName(), item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount()));
 		purchase = new PurchaseBoard(itemList,today);
 		purchaseSet();
 		userSet();
@@ -52,8 +53,9 @@ public class PurchasePanel extends JPanel {
 		add(userinfo_board);
 	}
 	private void purchaseSet(){
-		purchase.setBounds(0, 810, 1900, 250+(100*itemList.size()));
+		purchase.setBounds(0, 810, 1900, 300+(100*itemList.size()));
 		purchase.setBackground(Color.white);
 		add(purchase);
 	}
+
 }

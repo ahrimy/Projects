@@ -2,21 +2,23 @@ package oliveYoung;
 
 public class Item {
 	private String category;
+	private String itemTitle;
 	private String itemName; // 상품명
 	private String imageName;
 	private int price; // 가격
 	// static int systemCount; // 상품재고
 	private int count; // 유저 구매수량
 	private boolean onlyOnline;
-
+	
 	public Item() {
 	}
 public void print(){
 	System.out.println(category+" "+itemName+" "+imageName+" "+price+" "+count+" "+onlyOnline);
 	
 }
-	public Item(String category, String itemName, String imageName, int price, int count, boolean onlyOnline) {
+	public Item(String category, String itemTitle,String itemName, String imageName, int price, int count, boolean onlyOnline) {
 		this.category = category;
+		this.itemTitle = itemTitle;
 		this.itemName = itemName;
 		this.imageName = imageName;
 		this.price = price;
@@ -26,6 +28,8 @@ public void print(){
 public String saveItem(){
 	String data = "";
 	data+=category;
+	data+="_";
+	data+=itemTitle;
 	data+="_";
 	data+=itemName;
 	data+="_";
@@ -39,6 +43,13 @@ public String saveItem(){
 	data+="\n";
 	
 	return data;
+}
+
+	public String getItemTitle() {
+	return itemTitle;
+}
+public void setItemTitle(String itemTitle) {
+	this.itemTitle = itemTitle;
 }
 	public boolean isOnlyOnline() {
 		return onlyOnline;

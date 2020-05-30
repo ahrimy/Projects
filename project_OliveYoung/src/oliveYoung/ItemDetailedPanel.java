@@ -41,6 +41,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 	JLabel deliveryStore;
 	static Popup p;//
 	JPanel storeList;//
+	Store availableStore;
 	JFrame f = new JFrame("pop");
 	String[][] labelList = { { "판매가", "" }, { "카드할인혜택", "The CJ카드 추가 10%" }, { "CJ ONE 포인트 예상적립", "2%적립" },
 			{ "배송비", "2,500원(결제금액 20,000원 이상 무료)" }, { "배송방법", "올리브영 배송" }, { "배송기간", "평균 3일 이내 배송" },
@@ -48,9 +49,9 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 
 	public ItemDetailedPanel(Item item) {
 		setLayout(null);
-		this.item = new Item(item.getCategory(), item.getItemName(), item.getImageName(), item.getPrice(), 1,
-				item.isOnlyOnline());
-
+		this.item = new Item(item.getCategory(), item.getItemTitle(), item.getItemName(), item.getImageName(),
+				item.getPrice(), 1, item.isOnlyOnline());
+		availableStore = null;
 		storeList = new StoreListPanel(item);//
 		storeList.setSize(1000, 900);
 
@@ -264,20 +265,56 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
 			} else {
 				if (purchase.getText().equals("바로구매")) {
-					PurchasePanel purchasePanel = null;
-					JScrollPane scroll = new JScrollPane();
 					if (checkDeliveryToday.isSelected()) {
-						purchasePanel = new PurchasePanel(item, true);
-					} else {
-						purchasePanel = new PurchasePanel(item, false);
-					}
-					Dimension size = new Dimension();
-					size.setSize(1920, 1060);
+						int index = StoreManager.instance.storeIndex(availableStore.getCity(), availableStore);
+						String data = StoreManager.instance.storeList.get(availableStore.getCity()).get(index)
+								.findItem(item);
+						if (data.equals("판매하지 않는 상품")) {
+							JOptionPane.showMessageDialog(null, "현재 판매하지 않는 상품입니다", "안내", JOptionPane.WARNING_MESSAGE);
+						} else if (data.equals("현재 해당 지점에 재고 없음")) {
+							JOptionPane.showMessageDialog(null, "현재 해당 지점에서 일시 품절 되었습니다", "안내", JOptionPane.WARNING_MESSAGE);
+						} else if (data.equals("재고 수량 부족")) {
+							JOptionPane.showMessageDialog(null, "현재 해당 지점에 재고가 부족합니다", "안내", JOptionPane.WARNING_MESSAGE);
+						} else {
+							PurchasePanel purchasePanel = null;
+							JScrollPane scroll = new JScrollPane();
+							if (checkDeliveryToday.isSelected()) {
+								purchasePanel = new PurchasePanel(item, true);
+							} else {
+								purchasePanel = new PurchasePanel(item, false);
+							}
+							Dimension size = new Dimension();
+							size.setSize(1920, 1110);
 
-					purchasePanel.setPreferredSize(size);
-					scroll.setViewportView(purchasePanel);
-					Main.frame.setContentPane(scroll);
-					Main.frame.revalidate();
+							purchasePanel.setPreferredSize(size);
+							scroll.setViewportView(purchasePanel);
+							Main.frame.setContentPane(scroll);
+							Main.frame.revalidate();
+						}
+					}else{
+						String data = ItemManager.instance.checkStock(item.getCategory(), item);
+						if (data.equals("구매 가능")) {
+							PurchasePanel purchasePanel = null;
+							JScrollPane scroll = new JScrollPane();
+							if (checkDeliveryToday.isSelected()) {
+								purchasePanel = new PurchasePanel(item, true);
+							} else {
+								purchasePanel = new PurchasePanel(item, false);
+							}
+							Dimension size = new Dimension();
+							size.setSize(1920, 1110);
+
+							purchasePanel.setPreferredSize(size);
+							scroll.setViewportView(purchasePanel);
+							Main.frame.setContentPane(scroll);
+							Main.frame.revalidate();
+						} else if (data.equals("재고 수량 부족")) {
+							JOptionPane.showMessageDialog(null, "재고 수량이 부족합니다.", "안내", JOptionPane.WARNING_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(null, "현재 판매되지 않는 상품입니다.", "안내", JOptionPane.WARNING_MESSAGE);
+						}
+					}
+
 				}
 			}
 		} else if (e.getSource() == cart) {
@@ -288,9 +325,8 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 
 					String data = ItemManager.instance.checkStock(item.getCategory(), item);
 					if (data.equals("구매 가능")) {
-						String[] temp = item.getItemName().split(" ");
-						UserManager.usermanager.userList.get(UserManager.logIdx).cart.add(item.getImageName(), temp[0],
-								item.getItemName(), item.getPrice(), item.getCount());
+						UserManager.usermanager.userList.get(UserManager.logIdx).cart.add(item.getImageName(),
+								item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount());
 						JOptionPane.showMessageDialog(null, "장바구니 담기 완료", "안내", JOptionPane.WARNING_MESSAGE);
 					} else if (data.equals("재고 수량 부족")) {
 						JOptionPane.showMessageDialog(null, "재고 수량이 부족합니다.", "안내", JOptionPane.WARNING_MESSAGE);
@@ -325,16 +361,17 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 							JOptionPane.showMessageDialog(null, "오늘 드림 가능한 매장이 없습니다.", "안내",
 									JOptionPane.WARNING_MESSAGE);
 							checkDeliveryToday.setSelected(false);
-						}else{
+						} else {
 							if (cart.getText().equals("일시 품절")) {
-//								cart.setBackground(Color.WHITE);
-//								cart.setText("장바구니");
-//								cart.setForeground(Color.PINK);
+								// cart.setBackground(Color.WHITE);
+								// cart.setText("장바구니");
+								// cart.setForeground(Color.PINK);
 
 								purchase.setBackground(Color.PINK);
 								purchase.setText("바로구매");
 								purchase.setForeground(Color.WHITE);
 							}
+							availableStore = temp;
 						}
 						data = temp.getStoreName() + " : ";
 						data += status;
@@ -358,7 +395,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 						purchase.setText("바로구매");
 						purchase.setForeground(Color.WHITE);
 					}
-				}else if (purchase.getText().equals("바로구매")){
+				} else if (purchase.getText().equals("바로구매")) {
 					if (ItemManager.instance.checkStock(item.getCategory(), item).equals("품절")) {
 
 						purchase.setBackground(Color.white);

@@ -37,14 +37,16 @@ public class Store {
 			itemList.get(i).print();
 		}
 	}
-	public int getItemCount(Item item){
-		for (int i=0;i<itemList.size();i++){
-			if(item.getImageName().equals(itemList.get(i).getItemName())){
+
+	public int getItemCount(Item item) {
+		for (int i = 0; i < itemList.size(); i++) {
+			if (item.getImageName().equals(itemList.get(i).getItemName())) {
 				return itemList.get(i).getCount();
 			}
 		}
 		return 0;
 	}
+
 	public String findItem(Item item) {
 		String data = "";
 		int check = -1;
@@ -59,28 +61,32 @@ public class Store {
 		} else {
 			if (itemList.get(check).getCount() == 0) {
 				data = "현재 해당 지점에 재고 없음";
+			} else if (itemList.get(check).getCount() < item.getCount()) {
+				data = "재고 수량 부족";
 			} else {
+
 				data = "구매가능";
-				data+="(남은수량 : "+itemList.get(check).getCount()+")";
+				data += "(남은수량 : " + itemList.get(check).getCount() + ")";
 			}
 		}
 		return data;
 	}
-	/*add count of item*/
-	public void putItem(Item item){
-		for(int i=0;i<itemList.size();i++){
-			if(itemList.get(i).getItemName().equals(item.getItemName())){
+
+	/* add count of item */
+	public void putItem(Item item) {
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemList.get(i).getItemName().equals(item.getItemName())) {
 				itemList.get(i).updateCount(item.getCount());
 			}
 		}
 		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
 		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
 	}
-	
-	/*reduce count of item*/
-	public void reduceItem(Item item){
-		for(int i=0;i<itemList.size();i++){
-			if(itemList.get(i).getItemName().equals(item.getItemName())){
+
+	/* reduce count of item */
+	public void reduceItem(Item item) {
+		for (int i = 0; i < itemList.size(); i++) {
+			if (itemList.get(i).getItemName().equals(item.getItemName())) {
 				itemList.get(i).updateCount(-item.getCount());
 				break;
 			}
@@ -88,6 +94,7 @@ public class Store {
 		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
 		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
 	}
+
 	public String saveStore() {
 		String data = "";
 		data += city;
@@ -112,7 +119,7 @@ public class Store {
 	public void loadStore(String data) {
 		String info[] = data.split("_");
 		int check = -1;
-		Item temp = new Item(info[0], info[1], info[2], Integer.parseInt(info[3]), Integer.parseInt(info[4]),
+		Item temp = new Item(info[0], info[1], info[2], info[3], Integer.parseInt(info[4]), Integer.parseInt(info[5]),
 				Boolean.parseBoolean(info[5]));
 		for (int i = 0; i < itemList.size(); i++) {
 			if (itemList.get(i).getItemName().equals(info[1])) {

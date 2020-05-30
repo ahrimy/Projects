@@ -191,7 +191,7 @@ public class CartMidPanel extends JPanel implements ActionListener , ItemListene
 					PurchasePanel purchasePanel = new PurchasePanel(cart.buyList);
 					JScrollPane scroll = new JScrollPane();
 					Dimension size = new Dimension();
-					size.setSize(1920, 1060
+					size.setSize(1920, 1110
 							+ (100 * UserManager.usermanager.getBuyListSize()));
 					purchasePanel.setPreferredSize(size);
 					scroll.setViewportView(purchasePanel);

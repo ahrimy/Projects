@@ -1,28 +1,18 @@
-메이크업_클리오킬커버파운웨어쿠션XP_./src/images/base01.jpg_20160_10_false
-메이크업_데싱디바 여름매니/페디 골라담기_./src/images/nail01.jpg_9800_10_false
-메이크업_바비브라운엑스트라립틴트_./src/images/lip01.jpg_36550_10_false
-메이크업_웨이크메이크무드스타일러_./src/images/eye01.jpg_19950_10_false
-바디케어_트리헛시어슈가 스크럽모로칸 로즈_./src/images/body01.jpg_12640_10_true
-바디케어_낫포유클리어바디미스트_./src/images/body02.jpg_15900_10_false
-바디케어_필립스루메아에센셜IPL제모기_./src/images/body03.jpg_259000_10_false
-바디케어_일리윤 세라마이드 아토로션_./src/images/body04.jpg_11900_10_false
-스킨케어_더랩바이블랑두 올리고 히알루론산_./src/images/toner01.jpg_17000_10_false
-스킨케어_라운드랩1025독도 토너 대용량 500ml 기획_./src/images/toner02.jpg_13500_10_false
-스킨케어_라운드랩1025독도 토너 200ml 기획_./src/images/toner03.jpg_16200_10_false
-스킨케어_마녀공장 비피다 바이옴 앰플토너_./src/images/toner04.jpg_17500_10_false
-스킨케어_[1+1한정기획]크리니크 노란로션_./src/images/lotion01.jpg_46500_10_false
-스킨케어_피지오겔레드수딩AI진정보습 로션_./src/images/lotion02.jpg_28000_10_false
-스킨케어_피지오겔DMT로션_./src/images/lotion03.jpg_22300_10_false
-스킨케어_에스트라 아토베리어365 예민보습 로션_./src/images/lotion04.jpg_28000_10_false
-스킨케어_토리든 다이브인 저분자 히알루론산 세럼_./src/images/serum01.jpg_15300_10_false
-스킨케어_아이소이 불가리안 로즈 블레미쉬 케어 세럼_./src/images/serum02.jpg_45900_10_false
-스킨케어_오리진스 메가버섯 퍼스트에센스_./src/images/serum03.jpg_39200_10_false
-스킨케어_웰라쥬 골드콜라겐 원데이키트_./src/images/serum04.jpg_53400_10_false
-스킨케어_닥터지 레드블레미쉬클리어수딩크림_./src/images/cream01.jpg_25200_10_false
-스킨케어_보타닉힐보 프로바이오덤 리페어 리프팅_./src/images/cream02.jpg_30400_10_false
-스킨케어_피지오겔DMT페이셜크림_./src/images/cream03.jpg_25800_10_false
-스킨케어_라로슈포제 시카플라스트 밤 B5_./src/images/cream04.jpg_25600_10_false
-헤어케어_모레모 워터트리트먼트 미라클 10_./src/images/hair01.jpg_24500_10_false
-헤어케어_닥터포헤어 폴리젠샴푸_./src/images/hair02.jpg_38900_10_false
-헤어케어_이브로쉐라즈베리 헤어 식초 대용량_./src/images/hair03.jpg_9900_10_true
-헤어케어_헤드스파7 트리트먼트_./src/images/hair04.jpg_15760_10_false
+메이크업_클리오_클리오킬커버파운웨어쿠션XP_./src/images/base01.jpg_20160_80_false
+메이크업_데싱디바_데싱디바 여름매니/페디 골라담기_./src/images/nail01.jpg_9800_70_false
+메이크업_바비브라운_바비브라운엑스트라립틴트_./src/images/lip01.jpg_36550_80_false
+메이크업_웨이크메이크_웨이크메이크무드스타일러_./src/images/eye01.jpg_19950_70_false
+바디케어_트리헛_트리헛시어슈가 스크럽모로칸 로즈_./src/images/body01.jpg_12640_80_false
+바디케어_낫포유_낫포유클리어바디미스트_./src/images/body02.jpg_15900_70_false
+바디케어_필립스_필립스루메아에센셜IPL제모기_./src/images/body03.jpg_259000_60_false
+바디케어_일리윤_일리윤 세라마이드 아토로션_./src/images/body04.jpg_11900_80_false
+스킨케어_더 랩_더랩바이블랑두 올리고 히알루론산_./src/images/toner01.jpg_17000_0_false
+스킨케어_웰라쥬_웰라쥬 골드콜라겐 원데이키트_./src/images/serum04.jpg_53400_50_false
+스킨케어_닥터지_닥터지 레드블레미쉬클리어수딩크림_./src/images/cream01.jpg_25200_50_true
+스킨케어_보타닉힐보_보타닉힐보 프로바이오덤 리페어 리프팅_./src/images/cream02.jpg_30400_50_true
+스킨케어_피지오겔_피지오겔DMT페이셜크림_./src/images/cream03.jpg_25800_80_false
+스킨케어_라로슈포제_라로슈포제 시카플라스트 밤 B5_./src/images/cream04.jpg_25600_80_false
+헤어케어_모레모_모레모 워터트리트먼트 미라클 10_./src/images/hair01.jpg_24500_0_false
+헤어케어_닥터포헤어_닥터포헤어 폴리젠샴푸_./src/images/hair02.jpg_38900_70_false
+헤어케어_이브로쉐라즈_이브로쉐라즈베리 헤어 식초 대용량_./src/images/hair03.jpg_9900_80_false
+헤어케어_헤드스파7_헤드스파7 트리트먼트_./src/images/hair04.jpg_15760_70_false
