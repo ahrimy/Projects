@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Store {
-	private String city;
-	private String street;
+	private String storeName;// 매장명
+	private String city;// 매장 도시명
+	private String street;// 매장 도로명
+	/* 매장에서 배송 가능한 우편번호의 범위 */
 	private int startCode;
-
 	private int lastCode;
-	private String storeName;
-
+	/* 매장에 판매하는 상품 목록 */
 	ArrayList<Item> itemList;
 
 	public Store() {
@@ -91,7 +91,8 @@ public class Store {
 				break;
 			}
 		}
-//		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
+		// ItemManager.instance.updateItemCount(item,
+		// StoreManager.instance.getItemCounts(item));
 		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
 	}
 

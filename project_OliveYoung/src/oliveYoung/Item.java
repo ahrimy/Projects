@@ -1,14 +1,13 @@
 package oliveYoung;
 
 public class Item {
-	private String category;
-	private String itemTitle;
-	private String itemName; // 상품명
-	private String imageName;
-	private int price; // 가격
-	// static int systemCount; // 상품재고
-	private int count; // 유저 구매수량
-	private boolean onlyOnline;
+	private String category;   //상품 카테고리
+	private String itemTitle;  //상품 브랜드
+	private String itemName;   //상품명
+	private String imageName;  //상품 이미지
+	private int price;         //상품 가격
+	private int count;         //상품 재고
+	private boolean onlyOnline;//오프라인 판매여부
 	
 	public Item() {
 	}
