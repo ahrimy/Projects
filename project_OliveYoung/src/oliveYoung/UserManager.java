@@ -145,7 +145,7 @@ public class UserManager {
 		}
 	}
 
-	// 회원정보 저장
+	// 회원정보 저장 + 장바구니.
 	public String saveUser() {
 		String data = "";
 
@@ -161,24 +161,56 @@ public class UserManager {
 			data += userList.get(i).userStreet;
 			data += "/";
 			data += userList.get(i).userCode;
-
-			if (i < userList.size() - 1) {
-				data += "\n";
+			data += "\n";
+			
+		
+			// 여기서부터 카트리스트
+			data += userList.get(i).cart.cartList.size();
+			if(userList.get(i).cart.cartList.size() != 0) {
+			data += "\n";
 			}
+			for(int j = 0; j < userList.get(i).cart.cartList.size(); j++) {
+				data += userList.get(i).cart.cartList.get(j).imageFile;
+				data += "/";
+				data += userList.get(i).cart.cartList.get(j).itemTitleName;
+				data += "/";
+				data += userList.get(i).cart.cartList.get(j).itemFullName;
+				data += "/";
+				data += userList.get(i).cart.cartList.get(j).price;
+				data += "/";
+				data += userList.get(i).cart.cartList.get(j).buyCount;
+				data += "/";
+				data += userList.get(i).cart.cartList.get(j).today;
+				data += "/";
+				data += userList.get(i).cart.cartList.get(j).getCategory();
+				if(j < userList.get(i).cart.cartList.size() - 1) {
+					data += "\n";
+				}
+				
+			}
+			
+			if (i < userList.size() - 1) {
+				data += "\n\n";
+			}
+			
+			
 		}
-
+		
+		
 		System.out.println(data);
 
 		return data;
 	}
 
-	// 회원정보 로드후 어레이리스트에 저장
+	// 회원정보 로드후 어레이리스트에 저장 + 장바구니 //카테고리 부분 수정
 	public void loadUser(String data) {
-		String info[] = data.split("\n");
+		String info[] = data.split("\n\n");
 
 		for (int i = 0; i < info.length; i++) {
+			String user[] = info[i].split("\n");
+			
 			User temp = new User();
-			String userinfo[] = info[i].split("/");
+			String userinfo[] = user[0].split("/");
 
 			temp.userName = userinfo[0];
 			temp.userId = userinfo[1];
@@ -187,10 +219,42 @@ public class UserManager {
 			temp.userStreet = userinfo[4];
 			temp.userCode = Integer.parseInt(userinfo[5]);
 
-			userList.add(temp);
+			
+			
+			
+			int size = Integer.parseInt(user[1]); // 카트의 cartList의 갯수
+			if(size != 0) {
+			for(int j = 2; j < 2 + size; j++) {
+				String itemInfo[] = user[j].split("/");
+				for(int t = 0;  t < size; t++) {
+				ItemInfo1 tempItem = new ItemInfo1();
+				tempItem.imageFile = "";
+				tempItem.imageFile += itemInfo[0];
+				tempItem.imageFile += "/";
+				tempItem.imageFile += itemInfo[1];
+				tempItem.imageFile += "/";
+				tempItem.imageFile += itemInfo[2];
+				tempItem.imageFile += "/";
+				tempItem.imageFile += itemInfo[3];
+				tempItem.itemTitleName = itemInfo[4];
+				tempItem.itemFullName = itemInfo[5];
+				tempItem.price = Integer.parseInt(itemInfo[6]);
+				tempItem.buyCount = Integer.parseInt(itemInfo[7]);
+				if(itemInfo[8].equals("true")) {
+					tempItem.today = true;
+				}else {
+					tempItem.today = false;
+				}
+				temp.cart.loadCart(tempItem.imageFile, tempItem.itemTitleName, tempItem.itemFullName, tempItem.price, tempItem.buyCount, tempItem.today,itemInfo[9]);
+				}
+			}		
+			}
+				userList.add(temp);	
+				
+			}
 		}
-	}
-
+	
+	
 	// 비밀번호 찾기
 	public void findPw(String userName, String userId) {
 		int check = -1;

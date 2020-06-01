@@ -302,7 +302,7 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 								purchasePanel = new PurchasePanel(item, false);
 							}
 							Dimension size = new Dimension();
-							size.setSize(1920, 1110);
+							size.setSize(1920, 1060);
 
 							purchasePanel.setPreferredSize(size);
 							scroll.setViewportView(purchasePanel);
@@ -322,17 +322,42 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 				if (UserManager.usermanager.logIdx == -1) {
 					JOptionPane.showMessageDialog(null, "로그인이 필요한 서비스 입니다", "안내", JOptionPane.WARNING_MESSAGE);
 				} else {
-
-					String data = ItemManager.instance.checkStock(item.getCategory(), item);
-					if (data.equals("구매 가능")) {
+					if (checkDeliveryToday.isSelected()) {
+						int index = StoreManager.instance.storeIndex(availableStore.getCity(), availableStore);
+						String data = StoreManager.instance.storeList.get(availableStore.getCity()).get(index)
+								.findItem(item);
+						if (data.equals("판매하지 않는 상품")) {
+							JOptionPane.showMessageDialog(null, "현재 판매하지 않는 상품입니다", "안내", JOptionPane.WARNING_MESSAGE);
+						} else if (data.equals("현재 해당 지점에 재고 없음")) {
+							JOptionPane.showMessageDialog(null, "현재 해당 지점에서 일시 품절 되었습니다", "안내", JOptionPane.WARNING_MESSAGE);
+						} else if (data.equals("재고 수량 부족")) {
+							JOptionPane.showMessageDialog(null, "현재 해당 지점에 재고가 부족합니다", "안내", JOptionPane.WARNING_MESSAGE);
+						} else {
+							
+							if (checkDeliveryToday.isSelected()) {
+									UserManager.usermanager.userList.get(UserManager.logIdx).cart.add(item.getImageName(),
+									item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount() , true,item.getCategory());
+							} else {
+									UserManager.usermanager.userList.get(UserManager.logIdx).cart.add(item.getImageName(),
+									item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount() , false,item.getCategory());
+							}
+							FileManager.instance.saveUser(UserManager.usermanager.saveUser(), "user.txt");
+							JOptionPane.showMessageDialog(null, "장바구니 담기 완료", "안내", JOptionPane.WARNING_MESSAGE);
+						} //
+					}else {
+						String data = ItemManager.instance.checkStock(item.getCategory(), item);
+						if (data.equals("구매 가능")) {
 						UserManager.usermanager.userList.get(UserManager.logIdx).cart.add(item.getImageName(),
-								item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount());
+								item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount() , false,item.getCategory());
+						FileManager.instance.saveUser(UserManager.usermanager.saveUser(), "user.txt");
 						JOptionPane.showMessageDialog(null, "장바구니 담기 완료", "안내", JOptionPane.WARNING_MESSAGE);
-					} else if (data.equals("재고 수량 부족")) {
+						} else if (data.equals("재고 수량 부족")) {
 						JOptionPane.showMessageDialog(null, "재고 수량이 부족합니다.", "안내", JOptionPane.WARNING_MESSAGE);
-					} else {
+						} else {
 						JOptionPane.showMessageDialog(null, "현재 판매되지 않는 상품입니다.", "안내", JOptionPane.WARNING_MESSAGE);
+						}
 					}
+
 				}
 			}
 
@@ -363,9 +388,9 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 							checkDeliveryToday.setSelected(false);
 						} else {
 							if (cart.getText().equals("일시 품절")) {
-								// cart.setBackground(Color.WHITE);
-								// cart.setText("장바구니");
-								// cart.setForeground(Color.PINK);
+								 cart.setBackground(Color.WHITE);
+								 cart.setText("장바구니");
+								 cart.setForeground(Color.PINK);
 
 								purchase.setBackground(Color.PINK);
 								purchase.setText("바로구매");
@@ -397,7 +422,9 @@ public class ItemDetailedPanel extends JPanel implements ActionListener {
 					}
 				} else if (purchase.getText().equals("바로구매")) {
 					if (ItemManager.instance.checkStock(item.getCategory(), item).equals("품절")) {
-
+						cart.setBackground(Color.GRAY);
+						cart.setText("일시 품절");
+						cart.setForeground(Color.white);
 						purchase.setBackground(Color.white);
 						purchase.setText("재입고 알림");
 						purchase.setForeground(Color.pink);

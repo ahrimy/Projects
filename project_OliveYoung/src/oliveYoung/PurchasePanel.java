@@ -17,8 +17,9 @@ public class PurchasePanel extends JPanel{
 		setLayout(null);
 		mainSet();
 		itemList = new ArrayList<ItemInfo1>();
-		itemList.add(new ItemInfo1(item.getImageName(), item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount()));
-		purchase = new PurchaseBoard(itemList,today);
+//		itemList.add(new ItemInfo1(item.getImageName(), item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount()));
+		itemList.add(new ItemInfo1(item.getImageName(), item.getItemTitle(), item.getItemName(), item.getPrice(), item.getCount() , today,item.getCategory()));
+		purchase = new PurchaseBoard(itemList);
 		purchaseSet();
 		userSet();
 	}
@@ -26,7 +27,7 @@ public class PurchasePanel extends JPanel{
 		setLayout(null);
 		mainSet();
 		this.itemList = itemList;
-		purchase = new PurchaseBoard(itemList,false);
+		purchase = new PurchaseBoard(itemList);
 		purchaseSet();
 		userSet();
 	}
@@ -35,7 +36,7 @@ public class PurchasePanel extends JPanel{
 		mainSet();
 		itemList = new ArrayList<ItemInfo1>();
 		this.itemList.add(item);
-		purchase = new PurchaseBoard(itemList,false);
+		purchase = new PurchaseBoard(itemList);
 		purchaseSet();
 		userSet();
 	}

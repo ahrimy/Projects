@@ -84,14 +84,14 @@ public class Store {
 	}
 
 	/* reduce count of item */
-	public void reduceItem(Item item) {
+	public void reduceItem(ItemInfo1 item) {
 		for (int i = 0; i < itemList.size(); i++) {
-			if (itemList.get(i).getItemName().equals(item.getItemName())) {
-				itemList.get(i).updateCount(-item.getCount());
+			if (itemList.get(i).getItemName().equals(item.itemFullName)) {
+				itemList.get(i).updateCount(-item.buyCount);
 				break;
 			}
 		}
-		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
+//		ItemManager.instance.updateItemCount(item, StoreManager.instance.getItemCounts(item));
 		FileManager.instance.save(StoreManager.instance.saveStoreList(), "store.txt");
 	}
 

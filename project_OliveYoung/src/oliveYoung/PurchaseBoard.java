@@ -24,8 +24,10 @@ public class PurchaseBoard extends JPanel implements ActionListener{
 	int total;
 	JLabel title;
 	JButton purchase;
-	public PurchaseBoard(ArrayList<ItemInfo1> itemList,boolean today) {
+	public PurchaseBoard(ArrayList<ItemInfo1> itemList) {
 		setLayout(null);
+		this.today = itemList.get(0).today;
+		this.itemList = itemList;
 		totalPrice = new JLabel();
 		totalPrice.setBounds(1000,100+(itemList.size()*100),300,50);
 		total = 0;
@@ -44,8 +46,7 @@ public class PurchaseBoard extends JPanel implements ActionListener{
 		totalPrice.setText("Total : "+total +" ¿ø");
 		totalPrice.setFont(new Font("",Font.BOLD,30));
 		add(totalPrice);
-		this.today = today;
-		this.itemList = itemList;
+
 		list = new JLabel[itemList.size()][4];
 		imageList = new JLabel[itemList.size()];
 		textList = new JLabel[itemList.size()][2];
@@ -54,6 +55,7 @@ public class PurchaseBoard extends JPanel implements ActionListener{
 		purchase = new JButton("Purchase");
 		purchase.setBounds(1300, 100+(itemList.size()*100),300,50);
 		purchase.setBackground(Color.white);
+		purchase.addActionListener(this);
 		add(purchase);
 		
 	}
@@ -117,7 +119,8 @@ public class PurchaseBoard extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==purchase){
-
+			Main.frame.setContentPane(new PurchaseCompletePanel(itemList));
+			Main.frame.revalidate();
 		}
 	}
 	
