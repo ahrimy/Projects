@@ -4,8 +4,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ArrayList<Integer> list = new ArrayList();
-		MyArrayList<Integer> myList = new MyArrayList();
+		ArrayList<Integer> list = new ArrayList<>();
+		MyArrayList<Integer> myList = new MyArrayList<>();
 		
 		list.add(1);
 		list.add(2);
