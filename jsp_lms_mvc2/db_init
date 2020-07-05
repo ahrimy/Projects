@@ -1,0 +1,73 @@
+use lmsdb;
+
+insert into course value(1,"Java Programming"); 
+insert into course value(2,"Data structure"); 
+
+INSERT STUDENTS VALUES(
+	2020101001, 1, 'qwer', '김공부', '01023456789', 'apple@naver.com', '900628', '경상남도 창원시', '미정', '김공부0628'
+);
+INSERT STUDENTS VALUES(
+	2020101002, 1, 'qwer', '김귤', '01011111111', 'blue@naver.com', '920627', '서울시 동작구', '미정', '김귤0627'
+);
+INSERT STUDENTS VALUES(
+	2019101003, 2, 'qwer', '홍길동', '01022222222', 'car@naver.com', '950209', '서울시 관악구', '미정', '홍길동0209'
+);
+INSERT STUDENTS VALUES(
+	2019101004, 2, 'qwer', '도우너', '01033333333', 'drop@naver.com', '880816', '서울시 종로구', '미정', '도우너0816'
+);
+INSERT STUDENTS VALUES(
+	2018101005, 3, 'qwer', '공순이', '01044444444', 'eclipse@naver.com', '961203', '경기도 수원시', '미정', '공순이1203'
+);
+INSERT STUDENTS VALUES(
+	2018101006, 3, 'qwer', '양아림', '01055555555', 'flower@naver.com', '970613', '경기도 화정시', '미정', '양아림0613'
+);
+INSERT STUDENTS VALUES(
+	2017101007, 4, 'qwer', '김지연', '01066666666', 'green@naver.com', '010101', '서울시 구로구', '미정', '김지연0101'
+);
+INSERT STUDENTS VALUES(
+	2017101008, 4, 'qwer', '최여정', '01077777777', 'hire@naver.com', '020505', '서울시 영등포구', '미정', '최여정0505'
+);
+INSERT STUDENTS VALUES(
+	2016101009, 3, 'qwer', '박병욱', '01088888888', 'icecreem@naver.com', '000301', '서울시 송파구', '미정', '박병욱0301'
+);
+INSERT STUDENTS VALUES(
+	2015101010, 4, 'qwer', '김퓨터', '01099999999', 'juice@naver.com', '990702', '서울시 강남구', '미정', '김퓨터0702'
+);
+
+INSERT professors VALUES(
+	2020201001, 'asdf', '김교수', '01011112121', 'professor@gmail.com', '851010', '경기도 수원시 팔달구', '김교수1010' 
+);
+INSERT professors VALUES(
+	2020201002, 'asdf', '이교수', '01011111111', 'professor@naver.com', '880808', '서울시 용산구', '이교수0808' 
+);
+INSERT professors VALUES(
+	2020201003, 'asdf', '박교수', '01022222222', 'professor@daum.net', '700707', '서울시 종로구', '박교수0707' 
+);
+INSERT professors VALUES(
+	2020201004, 'asdf', '송교수', '01012312312', 'professor@college.net', '750705', '경기도 일산시', '송교수0705' 
+);
+INSERT professors VALUES(
+	2020201005, 'asdf', '임교수', '01033333333', 'professor@wise.com', '800808', '인천광역시', '임교수0808' 
+);
+INSERT professors VALUES(
+	2020201006, 'asdf', '강교수', '01044449999', 'professor@cafe24.com', '900601', '경기도 광주시', '강교수0601' 
+);
+INSERT professors VALUES(
+	2020201007, 'asdf', '최교수', '01031313131', 'professor@good.com', '891212', '경기도 성남시', '최교수3131' 
+);
+INSERT professors VALUES(
+	2020201008, 'asdf', '하교수', '01012341234', 'professor@aplus.net', '910109', '서울시 강남구', '하교수0109' 
+);
+INSERT professors VALUES(
+	2020201009, 'asdf', '윤교수', '01060606060', 'professor@csc.com', '870404', '서울시 구로구', '윤교수040' 
+);
+INSERT professors VALUES(
+	2020201010, 'asdf', '이교수', '01077777777', 'professor@github.com', '890303', '서울시 영등포구 여의도동', '이교수0303' 
+);
+
+insert into class value(1,"Class curriculum","Java Programming/김교수",1,20,2020201001);
+insert into class value(2,"Class curriculum","Data structure/이교수",2,10,2020201002);
+
+insert into enroll value(1,1,2020101001);
+insert into enroll value(2,2,2020101001);
+insert into enroll value(3,2,2020101002);
