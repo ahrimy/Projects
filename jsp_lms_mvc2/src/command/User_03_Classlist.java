@@ -20,15 +20,13 @@ public class User_03_Classlist implements CommandAction {
 		int type = (int) session.getAttribute("type");
 		String str = (String) session.getAttribute("id");
 		System.out.println(str);
-		int code = 1;
-		if(str!=null) {
-			code = Integer.parseInt(str);
-		}
+		int code = Integer.parseInt(str);
+		
 		System.out.println(code);
 
 		ArrayList<EnrollDTO> enrolls = null;
 		ArrayList<ClassDTO> classes = new ArrayList<ClassDTO>();
-		if (type == 2) {
+		if (type == 10) {
 			// student
 			enrolls = EnrollDAO.getInstance().getEnrollsStu(code);
 
@@ -37,7 +35,7 @@ public class User_03_Classlist implements CommandAction {
 				ClassDTO temp = ClassDAO.getInstance().getClass(enrolls.get(i).getClassNum());
 				classes.add(temp);
 			}
-		} else if (type == 3) {
+		} else if (type == 20) {
 			// professor
 			classes = ClassDAO.getInstance().getProfclass(code);
 		}
@@ -45,8 +43,8 @@ public class User_03_Classlist implements CommandAction {
 		String[] titles = new String[classes.size()];
 		String[] professors = new String[classes.size()];
 		for (int i = 0; i < classes.size(); i++) {
-			ArrayList<EnrollDTO> temp = EnrollDAO.getInstance().getEnrollsClass(classes.get(i).getClassNum());
-			participants[i] = temp.size();
+			
+			participants[i] = classes.get(i).getParticipant();
 			String info[] = classes.get(i).getClassInfo().split("/");
 			titles[i] = info[0];
 			professors[i] = info[1];

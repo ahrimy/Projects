@@ -41,14 +41,16 @@ public class StudentDAO {
 		Random rn = new Random();
 		int stuCode = 0;
 		
-		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		
 		try {
 			conn = getConn();
 			
+			Timestamp ts = new Timestamp(System.currentTimeMillis());
+			
 			while(true) {
 				int r = rn.nextInt(8998) + 1001;
-				stuCode = ts.getYear() + r;
+				
+				String temp = (ts.getYear()+1900) + "10" + String.valueOf(r);
+				stuCode = Integer.parseInt(temp);
 				
 				String sql = "SELECT * FROM students ";
 				sql += "WHERE stuCode=?";
@@ -151,6 +153,9 @@ public class StudentDAO {
 				if(dbPw.equals(pw)) {
 					check = 1;
 				}
+			} else {
+				ProfessorDAO pdao = ProfessorDAO.getInstance();
+				check = pdao.loginCheck(id, pw);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,5 +166,45 @@ public class StudentDAO {
 		}
 		
 		return check;
+	}
+	
+	// loginType
+	public int loginType(String id) {
+		int type = 0;
+		type = Integer.parseInt(id.substring(4,6));
+		return type;
+	}
+	
+	// getStudent(bean)
+	public Student getStd(String id) {
+		Student bean = null;
+		try {
+			conn = getConn();
+			String sql = "SELECT * FROM students ";
+			sql += "WHERE stuCode=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int stuCode = Integer.parseInt(id);
+				int grade = rs.getInt("grade");
+				String pw = rs.getString("pw");
+				String name = rs.getString("name");
+				String tel = rs.getString("tel");
+				String email = rs.getString("email");
+				String birth = rs.getString("birth");
+				String adds = rs.getString("adds");
+				String major = rs.getString("major");
+				String dupl = rs.getString("dupl");
+				bean = new Student(stuCode, grade, pw, name, tel, email, birth, adds, major);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {try{conn.close();}catch(SQLException e) {}}
+			if(pstmt != null) {try{pstmt.close();}catch(SQLException e) {}}
+			if(rs != null) {try{rs.close();}catch(SQLException e) {}}
+		}
+		return bean;
 	}
 }

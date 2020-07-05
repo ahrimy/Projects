@@ -17,8 +17,8 @@ public class User_06_MaketestPro implements CommandAction {
 		int classNum = (int)session.getAttribute("classNum");
 		String testTitle = request.getParameter("testTitle");
 		String testDesc = request.getParameter("testDesc");
-
-		int profNum = 1;// 나중에 로그인 값 받아옴
+		String str = (String)session.getAttribute("id");
+		int profNum = Integer.parseInt(str);
 		TestDTO test = new TestDTO(testTitle, testDesc, classNum, profNum);
 		int testNum = TestDAO.getInstance().addTest(test);
 

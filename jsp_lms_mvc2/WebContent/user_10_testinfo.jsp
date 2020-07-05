@@ -21,8 +21,8 @@
 			<tr height="50">
 				<td width="450" align="center"><input
 					type="button" value= "back" onclick="history.go(-1)" />
-					<c:if test="${3 eq sessionScope.type}"><input type="button" value="Edit"onclick="location.href='/jsp_lms_mvc2/user/edittest.do?testNum=${testNum}'" /></c:if>
-					<c:if test="${2 eq sessionScope.type}">
+					<c:if test="${20 eq sessionScope.type}"><input type="button" value="Edit"onclick="location.href='/jsp_lms_mvc2/user/edittest.do?testNum=${testNum}'" /></c:if>
+					<c:if test="${10 eq sessionScope.type}">
 					<c:if test="${'no result' eq status }">
 					<input type="button" value="start"onclick="location.href='/jsp_lms_mvc2/user/taketest.do?testNum=${testNum}'" />
 					</c:if>

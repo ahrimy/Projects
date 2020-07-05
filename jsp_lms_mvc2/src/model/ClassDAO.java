@@ -17,12 +17,10 @@ public class ClassDAO {
 		return instance;
 	}
 
-	// db연동 클래스 선언
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
 
-	// db연동 메서드
 	public Connection getConnection() {
 		String url = "jdbc:mysql://localhost:3306/lmsdb?serverTimezone=UTC";
 		String dbId = "root";
@@ -54,6 +52,8 @@ public class ClassDAO {
 				temp.setClassInfo(rs.getString("classInfo"));
 				temp.setCourseNum(rs.getInt("courseNum"));
 				temp.setProfCode(rs.getInt("profCode"));
+				temp.setMaxSize(rs.getInt("maxSize"));
+				temp.setParticipant(rs.getInt("participant"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class ClassDAO {
 	
 	public ArrayList<ClassDTO> getProfclass(int profCode){
 		ArrayList<ClassDTO> list = new ArrayList<>();
-		// db 연동
+		
 		conn = getConnection();
 		try {
 			String sql = "select * from class where profCode = ?";
@@ -96,6 +96,8 @@ public class ClassDAO {
 				temp.setClassInfo(rs.getString("classInfo"));
 				temp.setCourseNum(rs.getInt("courseNum"));
 				temp.setProfCode(profCode);
+				temp.setMaxSize(rs.getInt("maxSize"));
+				temp.setParticipant(rs.getInt("participant"));
 				list.add(temp);
 			}
 		} catch (Exception e) {

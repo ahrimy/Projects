@@ -10,7 +10,7 @@
 <body>
 	<div align="center">
 
-		<c:if test="${ null eq id }">
+		<c:if test="${ null eq sessionScope.id }">
 			<form action="/jsp_lms_mvc2/user/loginPro.do" method="post">
 				<input type="text" id="id" name="id" autofocus placeholder="학번입력"><br><br> 
 				<input type="password" id="pw" name="pw"><br><br> 

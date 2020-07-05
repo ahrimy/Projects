@@ -8,7 +8,7 @@
 <title>menu</title>
 </head>
 <body>
-<%-- 	<c:if test="${sessionScope.id ne null }"> --%>
+	<c:if test="${sessionScope.id ne null }">
 		<br /> &nbsp;
 	<b>My Page</b>
 		<br />
@@ -30,7 +30,7 @@
 	<a href="/jsp_lms_mvc2/user/classlist.do">My class</a>
 		<br />
 		<br />
-<%-- 	</c:if> --%>
+	</c:if>
 	<br /> &nbsp;
 	<b>Notice</b>
 	<br />

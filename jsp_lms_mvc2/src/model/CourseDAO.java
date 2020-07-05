@@ -16,12 +16,12 @@ public class CourseDAO {
 		return instance;
 	}
 
-	// db연동 클래스 선언
+
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
 
-	// db연동 메서드
+
 	public Connection getConnection() {
 		String url = "jdbc:mysql://localhost:3306/lmsdb?serverTimezone=UTC";
 		String dbId = "root";
@@ -49,7 +49,6 @@ public class CourseDAO {
 			if (rs.next()) {
 				temp.setCourseNum(courseNum);
 				temp.setCourseTitle(rs.getString("courseTitle"));
-				temp.setCourseDesc(rs.getString("courseDesc"));;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

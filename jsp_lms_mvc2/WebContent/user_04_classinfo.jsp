@@ -13,7 +13,7 @@
 			<a href="/jsp_lms_mvc2/user/testlist.do">Test
 				List</a>
 		</p>
-		<c:if test="${3 eq sessionScope.type}">
+		<c:if test="${20 eq sessionScope.type}">
 			<p>
 				<a href="/jsp_lms_mvc2/user/maketest.do">Make
 					Test</a>
@@ -23,7 +23,7 @@
 			</p>
 		</c:if>
 
-		<c:if test="${2 eq sessionScope.type}">
+		<c:if test="${10 eq sessionScope.type}">
 			<p>
 				<a href="/jsp_lms_mvc2/user/testresult.do">Test
 					Result</a>

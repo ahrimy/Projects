@@ -21,7 +21,7 @@
 					<tr>
 						<td width="10" align="center">No.</td>
 						<td width="500">My Test</td>
-						<c:if test="${2 eq sessionScope.type}">
+						<c:if test="${10 eq sessionScope.type}">
 							<td width="200">Status</td>
 						</c:if>
 					</tr>
@@ -30,7 +30,7 @@
 							<td width="10" align="center">${number}</td>
 							<td width="500"><a
 								href="/jsp_lms_mvc2/user/testinfo.do?testNum=${tests.get(i).getTestNum() }">${tests.get(i).getTestTitle() }</a></td>
-							<c:if test="${2 eq sessionScope.type}">
+							<c:if test="${10 eq sessionScope.type}">
 								<td width="200">${statusList.get(i) }</td>
 							</c:if>
 							<c:set var="number" value="${number+1}" />

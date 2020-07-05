@@ -18,7 +18,7 @@
 				<tr>
 					<td width="10">No.</td>
 					<td width="500">Course name</td>
-					<c:if test="${2 eq sessionScope.type}">
+					<c:if test="${10 eq sessionScope.type}">
 						<td width="200">Professor</td>
 					</c:if>
 					<td width="100">Participants</td>
@@ -30,7 +30,7 @@
 						<td width="10">${number}</td>
 						<td width="500"><a
 							href="/jsp_lms_mvc2/user/classinfo.do?classNum=${classes.get(i).getClassNum() }">${titles[i]}</a></td>
-						<c:if test="${2 eq sessionScope.type}">
+						<c:if test="${10 eq sessionScope.type}">
 							<td width="200">${professors[i]}</td>
 						</c:if>
 						<td width="100">${participants[i]}</td>

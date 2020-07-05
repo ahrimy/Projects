@@ -11,11 +11,11 @@ public class User_02_Main implements CommandAction{
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 	
-		session.setAttribute("type",3);
-	
+		session.setAttribute("version",2);
+		//type==>1:manager, 2:user(student, professor)
 		session.setAttribute("classNum", null);
 		
-		//type==>1:manager, 2:student, 3:professor
+		
 		return "/user_02_main.jsp";
 	}
 }

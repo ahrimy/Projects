@@ -8,15 +8,13 @@
 <title>_index.jsp</title>
 </head>
 <body>
-	<c:if test="${1 eq sessionScope.type}">
+	<c:if test="${1 eq sessionScope.version}">
 
 	</c:if>
-	<c:if test="${2 eq sessionScope.type}">
+	<c:if test="${2 eq sessionScope.version}">
 		<jsp:include page="user_00_top.jsp" />
 	</c:if>
-	<c:if test="${3 eq sessionScope.type}">
-		<jsp:include page="user_00_top.jsp" />
-	</c:if>
+
 	<div align="center">
 		<table border="1">
 			<tr>

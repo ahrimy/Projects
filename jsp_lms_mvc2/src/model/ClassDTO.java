@@ -6,7 +6,26 @@ public class ClassDTO {
 	private String classInfo;
 	private int courseNum;
 	private int profCode;
+	private int maxSize;
+	private int participant;
 	ClassDTO(){}
+	
+	public int getMaxSize() {
+		return maxSize;
+	}
+
+	public void setMaxSize(int maxSize) {
+		this.maxSize = maxSize;
+	}
+
+	public int getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(int participant) {
+		this.participant = participant;
+	}
+
 	public int getClassNum() {
 		return classNum;
 	}
