@@ -1,0 +1,95 @@
+create database lmsdb;
+use lmsdb;
+
+create table course(
+	courseNum int primary key, 
+    courseTitle varchar(50)
+);
+desc course;
+create table class(
+	classNum int primary key, classCurri text, classInfo text, courseNum int, maxSize int,profCode int(20), participant int, 
+    foreign key (courseNum) references course(courseNum),
+    foreign key(profCode) references professors(profCode)
+);
+desc class;
+
+create table enroll(
+	enrollNum int primary key,
+    classNum int,
+    stuCode int(20),
+    foreign key (classNum) references class(classNum),
+    foreign key (stuCode) references students(stuCode)
+);
+desc enroll;
+
+ create table test(
+		testNum int primary key,
+        testTitle varchar(50),
+        testDesc text,
+        testScore int(20),
+        classNum int,
+        profCode int(20),
+        foreign key (classNum) references class(classNum),
+        foreign key(profCode) references professors(profCode)
+);
+desc test;
+
+create table score(
+	scoreNum int primary key,
+    stuScore int(20),
+    status varchar(30),
+    testNum int,
+    stuCode int(20),
+    foreign key (testNum) references test(testNum),
+    foreign key (stuCode) references students(stuCode)
+);
+desc score;
+
+create table question(
+	queNum int primary key,
+    question text,
+    queType varchar(30),
+    queOpts text,
+    queAnswer text,
+    testNum int,
+    queScore int,
+    foreign key (testNum) references test(testNum)
+);
+desc question;
+
+create table answer(
+	answerNum int primary key,
+    answer text,
+    queNum int,
+    scoreNum int,
+    result varchar(20),
+    foreign key(queNum) references question(queNum),
+    foreign key(scoreNum) references score(scoreNum)
+);
+desc answer;
+
+CREATE TABLE students(
+	stuCode int(20),
+	grade int(1),
+    pw varchar(20),
+    name varchar(20),
+    tel varchar(20),
+    email varchar(50),
+    birth varchar(20),
+    adds varchar(50),
+    major varchar(20),
+    dupl varchar(20)
+);
+desc students;
+
+CREATE TABLE professors(
+	profCode int(20),
+	pw varchar(20),
+    name varchar(20),
+    tel varchar(20),
+    email varchar(50),
+    birth varchar(20),
+    adds varchar(50),
+    dupl varchar(20)
+);
+desc professors;
