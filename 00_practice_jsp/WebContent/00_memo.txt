@@ -1,0 +1,12 @@
+[1] MVC1
+	. 모든 처리가 jsp페이지에서 이루어진다.
+	. form.jsp[입력]-->formPro.jsp[처리]
+	
+[2] MVC2
+	. 모든 실행은 java페이지에서 시작된다.
+	. Form.java->form.jsp->FormPro.java->formPro.jsp
+	. MVC2에서 사용하는 Java파일은 서블릿(Servlet)이라 부른다.
+	. Servlet이란?
+		1) javax.sevlet.http.HttpServlet 클래스를 상속받을 클래스
+		2) HttpServlet클래스의 doGet() 또는 doPost() 메서드를 오버라이딩
+		3) 톰캣을 설치하면 HttpServlet 클래스가 제공됨
